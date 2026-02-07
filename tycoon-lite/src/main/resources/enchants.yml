@@ -1,0 +1,181 @@
+# ============================================
+# Tycoon Lite - 커스텀 인챈트 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+# [2026-02-02] v2: DEEP_MINER, TREE_SPIRIT, ORE_SENSE 추가, ELYTRA 지원 확대
+config-version: 2
+# 변경 후 /tycoon reload 로 적용
+# ============================================
+
+# 글로벌 설정
+global:
+  # 인챈트 효과 발동 시 메시지 표시 여부
+  showEffectMessages: true
+
+# ============================================
+# 인챈트 설정
+# ============================================
+# enabled: 활성화 여부 (false면 효과 발동 안 함)
+# 추가 옵션은 인챈트마다 다름
+# ============================================
+enchants:
+
+  # ===== 무기 인챈트 (8개) =====
+  
+  # 출혈: 공격 시 지속 피해 (최대 3중첩)
+  bleed:
+    enabled: true
+    
+  # 번개 강타: 공격 시 번개 소환
+  thunder_strike:
+    enabled: true
+    
+  # 서리: 공격 시 적 둔화 + 빙결 피해
+  frost_aspect:
+    enabled: true
+    
+  # 흡혈: 공격 시 입힌 피해의 일정 비율(레벨당 7%) 회복
+  vampire:
+    enabled: true
+    
+  # 트루 데미지: 입힌 피해의 일부가 방어 무시 고정피해
+  true_damage:
+    enabled: true
+    
+  # 승전보: 킬 시 체력 회복 (PvP/PvE 차등)
+  triumph:
+    enabled: true
+    
+  # 최후의 일격: 특수 조건에서 공격력 증가 (LITE에서 비활성화)
+  last_strike:
+    enabled: false
+    
+  # 치유 감소: 공격한 적의 체력 회복량 감소
+  grievous_wounds:
+    enabled: true
+    
+  # 사냥꾼: 동물에게 추가 피해
+  hunter:
+    enabled: true
+    
+  # 정밀 타격: 치명타 피해량 증가
+  precision:
+    enabled: true
+
+  # ===== 방어구 인챈트 (8개) =====
+  
+  # 신속: 이동속도 증가
+  speed_boost:
+    enabled: true
+    # 레벨 1/2/3의 이동속도 증가 % (v2.4 밸런싱)
+    percentPerLevel: [8, 15, 25]
+    
+  # 이단 점프: 공중에서 추가 점프
+  double_jump:
+    enabled: true
+    
+  # 재생력: 지속적인 체력 회복
+  regeneration:
+    enabled: true
+    # 레벨 1/2/3의 회복량 HP/3초 (v2.4 밸런싱)
+    hpPerLevel: [1, 2, 3]
+    
+  # 강인함: CC 지속시간 감소 (PvP/PvE 차등)
+  toughness:
+    enabled: true
+    
+  # 수면 보행: 물과 용암 위를 걸을 수 있음
+  water_walker:
+    enabled: true
+    
+  # 부동: 넉백 저항
+  steadfast:
+    enabled: true
+    
+  # 활력: 최대 체력 증가
+  vitality:
+    enabled: true
+    
+  # 야시: 어둠 속 시야 확보
+  night_vision:
+    enabled: true
+
+  # ===== 도구 인챈트 (7개) =====
+  
+  # 광맥 채굴: 연결된 광물 한번에 채굴
+  vein_miner:
+    enabled: true
+    # 레벨 1/2/3의 최대 블록 수 (설정 시 오버라이드)
+    # maxBlocksPerLevel: [8, 16, 32]
+    
+  # 수확: 작물 자동 재파종
+  harvest:
+    enabled: true
+    
+  # 염동력: 드롭 아이템 자동 수집
+  telekinesis:
+    enabled: true
+    
+  # 지혜: 직업 경험치 획득량 증가 (바닐라 경험치 제외)
+  wisdom:
+    enabled: true
+    # 레벨 1~5의 직업 경험치 증가 % (v2.5 상향)
+    percentPerLevel: [5, 10, 15, 20, 25]
+    
+  # 전문가: 직업 활동 시 Fortune 효과 추가
+  expertise:
+    enabled: true
+    
+  # 행운의 손: 희귀 드랍 확률 증가
+  lucky_hand:
+    enabled: true
+    
+  # 수선 효율: 수선 경험치 비용 감소
+  repair_efficiency:
+    enabled: true
+
+  # ===== 비활성화된 인챈트 =====
+  
+  # 내구성: 바닐라 Unbreaking과 중복되어 비활성화
+  durability:
+    enabled: false
+
+  # ===== 신규 도구 인챈트 (3개 - v2 추가) =====
+  
+  # 심층 채굴: Y < 0 광석 채굴 시 추가 드롭
+  deep_miner:
+    enabled: true
+    
+  # 숲의 정령: 원목 채굴 시 묘목 드롭 확률 증가
+  tree_spirit:
+    enabled: true
+    
+  # 광맥 감지: 주변 광석 위치 파티클 표시
+  ore_sense:
+    enabled: true
+
+  # ===== 활 인챈트 (4개 - Phase 3 추가 예정) =====
+  
+  # 속사: 활 당기기 속도 증가
+  quick_draw:
+    enabled: true
+    
+  # 저격: 풀차지 시 추가 피해
+  sniper:
+    enabled: true
+    
+  # 사냥꾼의 눈: 동물에게 추가 피해 (원거리)
+  hunters_eye:
+    enabled: true
+    
+  # 서리 화살: 명중 시 둔화 효과
+  frost_arrow:
+    enabled: true
+
+  # ===== 바닐라 확장 인챈트 (2개) =====
+  # 코드에 정의되어 있으나 LITE에서는 별도 획득 경로 없음
+  
+  # unbreaking_extended:
+  #   enabled: true
+  # fortune_extended:
+  #   enabled: true

@@ -1,0 +1,26 @@
+{
+    "schemaVersion": 1,
+    "id": "tycoon-hud",
+    "version": "${version}",
+    "name": "Tycoon HUD",
+    "description": "BotTycoon 서버용 커스텀 HUD 모드. 프로필 정보와 Vital 게이지를 표시합니다.",
+    "authors": ["Bapuri"],
+    "contact": {},
+    "license": "MIT",
+    "icon": "assets/tycoon-hud/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            "kr.bapuri.tycoonhud.TycoonHudMod"
+        ]
+    },
+    "mixins": [
+        "tycoon-hud.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.15.0",
+        "minecraft": "~1.20.1",
+        "fabric-api": "*"
+    }
+}
+

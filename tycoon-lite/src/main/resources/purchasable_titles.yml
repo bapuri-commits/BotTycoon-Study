@@ -1,0 +1,84 @@
+# ============================================
+# Tycoon Lite - 구매형 칭호 (Purchasable Titles)
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 1
+# 
+# BC(BottCoin)로 구매할 수 있는 칭호입니다.
+# 업적 칭호(titles.yml)와 완전 분리되어 관리됩니다.
+#
+# 구조:
+#   purchasable_titles:
+#     칭호_ID:
+#       display: "[표시이름]"
+#       description: "설명"
+#       color: "§색상코드"
+#       price: BC 가격
+#       luckperms_group: "LuckPerms그룹명"
+#
+# TAB 플러그인 설정:
+#   groups.yml에서 각 그룹에 prefix 설정 필요
+#   예: title_cute_star 그룹에 "[★귀여워★] " prefix
+
+purchasable_titles:
+
+  # ============================================
+  # 예시 칭호 (화려하고 예쁜 느낌)
+  # ============================================
+  
+  cute_star:
+    display: "[★귀여워★]"
+    description: "귀엽고 사랑스러운 칭호"
+    color: "§d"
+    price: 500
+    luckperms_group: "title_cute_star"
+    
+  pink_heart:
+    display: "[♥핑크♥]"
+    description: "핑크빛 하트 칭호"
+    color: "§d"
+    price: 800
+    luckperms_group: "title_pink_heart"
+    
+  flower:
+    display: "[✿꽃✿]"
+    description: "화사한 꽃 칭호"
+    color: "§a"
+    price: 600
+    luckperms_group: "title_flower"
+    
+  rainbow:
+    display: "[☆무지개☆]"
+    description: "무지개빛 칭호"
+    color: "§b"
+    price: 1500
+    luckperms_group: "title_rainbow"
+    
+  crown:
+    display: "[♔왕관♔]"
+    description: "고귀한 왕관 칭호"
+    color: "§6"
+    price: 2000
+    luckperms_group: "title_crown"
+
+# ============================================
+# TAB 플러그인 그룹 설정 예시 (groups.yml)
+# ============================================
+# groups:
+#   title_cute_star:
+#     tabprefix: "&d[★귀여워★] "
+#   title_pink_heart:
+#     tabprefix: "&d[♥핑크♥] "
+#   title_flower:
+#     tabprefix: "&a[✿꽃✿] "
+#   title_rainbow:
+#     tabprefix: "&b[☆무지개☆] "
+#   title_crown:
+#     tabprefix: "&6[♔왕관♔] "
+#
+# LuckPerms 그룹 생성 명령어:
+#   /lp creategroup title_cute_star
+#   /lp creategroup title_pink_heart
+#   /lp creategroup title_flower
+#   /lp creategroup title_rainbow
+#   /lp creategroup title_crown

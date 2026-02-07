@@ -1,0 +1,53 @@
+# ============================================
+# TycoonLite 자동화 팜 제한 시스템
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 1
+# 변경 후 /autofarm reload 로 적용
+
+# 시스템 활성화 여부
+enabled: true
+
+# 상한 설정
+# 공식: 마을 시간당 상한 = 마을 청크 수 × per-chunk-per-hour
+limits:
+  per-chunk-per-hour: 1000    # 청크당 시간당 1000개
+
+# 리셋 주기 (시간 단위)
+reset-period-hours: 1
+
+# 점진적 감소 설정
+reduction:
+  # 감소 기능 활성화 (false면 카운팅만, 실제 감소 없음)
+  enabled: false
+  # 상한 비율별 드롭 배율
+  # 예: 80% 도달 시 70%만 드롭
+  thresholds:
+    80: 0.7     # 80% 도달 → 70% 드롭
+    90: 0.5     # 90% 도달 → 50% 드롭
+    100: 0.1    # 100% 도달 → 10% 드롭 (완전 차단 X)
+
+# 제한 대상 아이템
+# 마을 내 자동화 팜에서 생산 가능한 아이템만 포함
+limited-materials:
+  - SUGAR_CANE       # 사탕수수
+  - PUMPKIN          # 호박
+  - MELON_SLICE      # 수박
+  - CACTUS           # 선인장
+  - BAMBOO           # 대나무
+  - KELP             # 켈프
+  - DRIED_KELP       # 말린 켈프
+  - COCOA_BEANS      # 코코아콩
+  # 필요시 추가
+
+# 메시지
+messages:
+  warning-80: "&e[자동화 팜] 생산량이 상한의 80%에 도달했습니다. ({current}/{limit})"
+  warning-90: "&c[자동화 팜] 생산량이 상한의 90%에 도달했습니다. 드롭이 감소합니다."
+  warning-100: "&c[자동화 팜] 생산량이 상한에 도달했습니다. 드롭이 크게 감소합니다."
+  info: "&7[자동화 팜] 현재 생산량: {current}/{limit} ({percent}%)"
+  reset: "&a[자동화 팜] 생산량 카운터가 리셋되었습니다."
+  exempt-wilderness: "&7야생에서는 자동화 팜 제한이 적용되지 않습니다."
+
+# 디버그 모드 (로그 출력)
+debug: false

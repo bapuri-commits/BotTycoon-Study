@@ -1,0 +1,126 @@
+# ============================================
+# Tycoon Lite - 칭호 (Title) 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 1
+# 
+# 칭호는 LuckPerms + TAB 플러그인과 연동됩니다.
+# 
+# 작동 방식:
+# 1. 업적 달성 시 칭호 해금
+# 2. /title equip <id> 로 장착
+# 3. LuckPerms 그룹에 추가됨
+# 4. TAB 플러그인이 그룹의 prefix를 표시
+#
+# 구조:
+#   titles:
+#     칭호_ID:
+#       display: "[표시이름]"
+#       description: "설명"
+#       color: "§색상코드"
+#       luckperms_group: "LuckPerms그룹명"  # 생략시 ID와 동일
+#
+# TAB 플러그인 설정 (config.yml):
+#   groups:
+#     title_collector:
+#       tabprefix: "&a[수집가] "
+#
+# LuckPerms 그룹 생성:
+#   /lp creategroup title_collector
+
+titles:
+
+  # ============================================
+  # 도감 (Codex) 관련 칭호
+  # ============================================
+  title_collector:
+    display: "[수집가]"
+    description: "도감 50개 아이템 등록"
+    color: "§a"
+    luckperms_group: "title_collector"
+    
+  title_codex_master:
+    display: "[도감왕]"
+    description: "도감 100개 아이템 등록"
+    color: "§b"
+    luckperms_group: "title_codex_master"
+
+  # ============================================
+  # 직업 (Job) 관련 칭호
+  # ============================================
+  title_artisan:
+    display: "[장인]"
+    description: "직업 만렙 달성"
+    color: "§e"
+    luckperms_group: "title_artisan"
+    
+  title_miner:
+    display: "[광부]"
+    description: "광부 최고 등급 달성"
+    color: "§7"
+    luckperms_group: "title_miner"
+    
+  title_farmer:
+    display: "[농부]"
+    description: "농부 최고 등급 달성"
+    color: "§2"
+    luckperms_group: "title_farmer"
+    
+  title_fisher:
+    display: "[어부]"
+    description: "어부 최고 등급 달성"
+    color: "§3"
+    luckperms_group: "title_fisher"
+
+  # ============================================
+  # PvP 관련 칭호
+  # ============================================
+  title_warrior:
+    display: "[전사]"
+    description: "PvP 10킬 달성"
+    color: "§c"
+    luckperms_group: "title_warrior"
+    
+  title_champion:
+    display: "[챔피언]"
+    description: "PvP 50킬 달성"
+    color: "§d"
+    luckperms_group: "title_champion"
+    
+  title_legend:
+    display: "[전설]"
+    description: "PvP 100킬 달성"
+    color: "§6"
+    luckperms_group: "title_legend"
+
+  # ============================================
+  # 바닐라 (Vanilla) 관련 칭호
+  # ============================================
+  title_dragon_slayer:
+    display: "[용사냥꾼]"
+    description: "엔더 드래곤 처치"
+    color: "§5"
+    luckperms_group: "title_dragon_slayer"
+    
+  title_village_hero:
+    display: "[영웅]"
+    description: "마을 습격 방어"
+    color: "§2"
+    luckperms_group: "title_village_hero"
+    
+  title_sky_explorer:
+    display: "[하늘탐험가]"
+    description: "겉날개 획득"
+    color: "§f"
+    luckperms_group: "title_sky_explorer"
+
+# ============================================
+# TAB 플러그인 설정 예시 (groups.yml)
+# ============================================
+# groups:
+#   title_collector:
+#     tabprefix: "&a[수집가] "
+#   title_codex_master:
+#     tabprefix: "&b[도감왕] "
+#   title_dragon_slayer:
+#     tabprefix: "&5[용사냥꾼] "

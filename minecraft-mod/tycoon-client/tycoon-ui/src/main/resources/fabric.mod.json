@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "tycoon-ui",
+    "version": "${version}",
+    "name": "Tycoon UI",
+    "description": "BotTycoon 서버용 통합 GUI 모드. 경제, 프로필, 직업, 도감 탭을 제공합니다.",
+    "authors": ["Bapuri"],
+    "contact": {},
+    "license": "MIT",
+    "icon": "assets/tycoon-ui/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            "kr.bapuri.tycoonui.TycoonUiMod"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.15.0",
+        "minecraft": "~1.20.1",
+        "fabric-api": "*",
+        "tycoon-hud": "*"
+    }
+}
+

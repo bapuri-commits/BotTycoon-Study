@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "koreanfix",
+  "version": "1.0.0",
+  "name": "Korean Input Fix",
+  "description": "마인크래프트에서 한글 IME 입력 문제를 해결하는 모드",
+  "authors": ["botte"],
+  "contact": {
+    "sources": "https://github.com/bapuri-commits/minecraft-mods-for-bottycoon"
+  },
+  "license": "MIT",
+  "icon": "assets/koreanfix/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["kr.bapuri.koreanfix.KoreanInputFixMod"]
+  },
+  "mixins": ["korean-input-fix.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric": "*"
+  }
+}

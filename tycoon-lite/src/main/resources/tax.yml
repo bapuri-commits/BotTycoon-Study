@@ -1,0 +1,175 @@
+# ============================================
+# TycoonLite 세금 시스템 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 2
+# 변경 후 /landtax reload 로 적용
+
+tax:
+  # 세금 시스템 활성화 여부
+  enabled: true
+  
+  # 관리자 UUID (이들이 지급하는 BD는 소득세 면제)
+  # 실제 UUID로 교체 필요
+  adminUuids:
+    - "00000000-0000-0000-0000-000000000000"  # CORNSFAB
+    - "00000000-0000-0000-0000-000000000001"  # hoshino13
+
+# ============================================
+# 소득세 설정 (3시간 간격 징수)
+# ============================================
+incomeTax:
+  enabled: true
+  
+  # [소득세] 3시간 간격 동안 벌어들인 재화 기반 누진세
+  # min: 최소 금액 (포함)
+  # max: 최대 금액 (포함, -1은 무제한)
+  # rate: 세율 (0.01 = 1%)
+  earnedBrackets:
+    - min: 0
+      max: 50000
+      rate: 0.0
+    - min: 50001
+      max: 200000
+      rate: 0.03
+    - min: 200001
+      max: 500000
+      rate: 0.05
+    - min: 500001
+      max: 1000000
+      rate: 0.08
+    - min: 1000001
+      max: -1
+      rate: 0.12
+  
+  # [보유세] 현재 보유 재화 기반 누진세
+  wealthBrackets:
+    - min: 0
+      max: 100000
+      rate: 0.0
+    - min: 100001
+      max: 1000000
+      rate: 0.001
+    - min: 1000001
+      max: 10000000
+      rate: 0.003
+    - min: 10000001
+      max: 100000000
+      rate: 0.005
+    - min: 100000001
+      max: -1
+      rate: 0.01
+
+# ============================================
+# 토지세 설정 (3시간 간격 징수)
+# ============================================
+landTax:
+  enabled: true
+  
+  # 징수 주기 (시간 단위)
+  periodHours: 3
+  
+  # 직업별 청크당 세금 (BD)
+  # 농부: 할인, 다른 직업/직업 없음: 기본
+  perChunkByJob:
+    farmer: 1500
+    miner: 2000
+    fisher: 2000
+    default: 2000
+  
+  # 청크 수 누진 배율
+  # minChunks: 최소 청크 수 (포함)
+  # maxChunks: 최대 청크 수 (포함, -1은 무제한)
+  # multiplier: 배율
+  chunkProgressiveRates:
+    - minChunks: 1
+      maxChunks: 10
+      multiplier: 1.0
+    - minChunks: 11
+      maxChunks: 30
+      multiplier: 1.5
+    - minChunks: 31
+      maxChunks: 60
+      multiplier: 2.0
+    - minChunks: 61
+      maxChunks: -1
+      multiplier: 3.0
+  
+  # 주민당 세금 (누진) - 기존 유지
+  # min: 최소 주민 수 (포함)
+  # max: 최대 주민 수 (포함, -1은 무제한)
+  # perVillager: 주민당 세금 (BD)
+  villagerRates:
+    - min: 1
+      max: 3
+      perVillager: 5000
+    - min: 4
+      max: 6
+      perVillager: 8000
+    - min: 7
+      max: 10
+      perVillager: 12000
+    - min: 11
+      max: -1
+      perVillager: 20000
+  
+  # 면제 조건
+  exemptions:
+    # 미접속 면제 시간 (시간 단위, 이 시간 동안 미접속 시 면제)
+    # 변경: 3 -> 12
+    inactiveHours: 12
+    # 재산 변화 없을 때 면제 여부
+    # 변경: true -> false (항상 징수)
+    noIncomeExempt: false
+  
+  # 미납 처리
+  unpaid:
+    # 마을 기능 정지 여부
+    freezeLand: true
+
+# ============================================
+# VIP 설정
+# ============================================
+vip:
+  # LuckPerms 그룹명
+  luckpermsGroup: "vip"
+  # 세금 할인율 (20 = 20%)
+  discountPercent: 20
+
+# ============================================
+# 메시지 설정
+# ============================================
+# 사용 가능한 플레이스홀더:
+#   {amount} - 실제 징수 금액 (할인 적용 후)
+#   {originalAmount} - 할인 전 원래 세금
+#   {earnedTax} - 소득세
+#   {wealthTax} - 보유세
+#   {discount} - VIP 할인율 (%)
+#   {discountAmount} - VIP 할인액 (BD)
+#   {land} - 마을 이름/개수
+#   {required} - 필요 금액
+#   {balance} - 현재 잔액
+messages:
+  # 소득세 징수 (VIP 할인 정보 포함)
+  incomeTaxDeducted: "&e[소득세] &f{amount} BD&e 징수 (소득: {earnedTax}, 보유: {wealthTax})"
+  
+  # VIP 할인 적용 알림 (할인액 표시)
+  vipDiscount: "&a[VIP 혜택] &6{discount}% 할인&a 적용! (&e{discountAmount} BD&a 절약)"
+  
+  # 토지세 징수 (VIP 할인 정보 포함)
+  landTaxCollected: "&a[토지세] &f{amount} BD&a 징수 ({land})"
+  landTaxFailed: "&c[토지세] BD 부족으로 납부 실패! (필요: {required}, 보유: {balance})"
+  
+  # 마을 정지
+  landFrozen: "&c[토지세] &4{land}&c 마을이 세금 미납으로 정지됨!"
+  landUnfrozen: "&a[토지세] {land} 마을의 정지가 해제되었습니다."
+  frozenAction: "&c[토지세] 이 마을은 세금 미납으로 정지되어 있습니다. 세금을 납부해주세요."
+  
+  # 면제 알림
+  exemptInactive: "&7[세금] 12시간 이상 비활동으로 세금이 면제되었습니다."
+  
+  # 명령어
+  taxInfo: "&e[세금 정보] 3시간 소득: {intervalIncome} BD, 보유: {balance} BD, 예상 세금: {estimatedTax} BD"
+  landTaxInfo: "&e[토지세 정보] 마을: {land}, 청크: {chunks}, 주민: {villagers}, 예상 세금: {tax} BD/3시간"
+  villagerAdded: "&a[주민 등록] {land} 마을에 주민 {count}마리가 등록되었습니다. (총: {total})"
+  villagerRemoved: "&a[주민 제거] {land} 마을에서 주민 {count}마리가 제거되었습니다. (총: {total})"

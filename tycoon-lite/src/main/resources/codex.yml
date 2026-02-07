@@ -1,0 +1,699 @@
+# ============================================
+# TycoonLite - 도감 (Codex) 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 2
+# 
+# 카테고리 구조:
+#   categories:
+#     카테고리명:
+#       required: 필요 수량 (기본: 1)
+#       consume: 등록 시 소멸 여부 (기본: true)
+#       reward: BottCoin 보상 오버라이드 (선택)
+#       items:
+#         MATERIAL_NAME: "한글 이름"
+#
+# 마일스톤 구조:
+#   milestones:
+#     등록수:
+#       bottcoin: BottCoin 보상
+#       bd: BD 보상
+
+# ============================================
+# 카테고리별 도감 아이템
+# ============================================
+categories:
+  
+  # ==========================================
+  # 일반 카테고리 (consume: true, required: 10)
+  # ==========================================
+
+  # ---- 자연 블록 ----
+  자연블록:
+    required: 10
+    consume: true
+    items:
+      GRASS_BLOCK: "잔디 블록"
+      DIRT: "흙"
+      ROOTED_DIRT: "뿌리가 있는 흙"
+      PODZOL: "회백토"
+      MYCELIUM: "균사체"
+      MUD: "진흙"
+      PACKED_MUD: "단단한 진흙"
+      MOSS_BLOCK: "이끼 블록"
+      STONE: "돌"
+      DEEPSLATE: "심층암"
+      DIORITE: "섬록암"
+      ANDESITE: "안산암"
+      GRANITE: "화강암"
+      CALCITE: "방해석"
+      TUFF: "응회암"
+      SAND: "모래"
+      RED_SAND: "붉은 모래"
+      GRAVEL: "자갈"
+
+  # ---- 광석 블록 ----
+  광석:
+    required: 10
+    consume: true
+    items:
+      COAL_ORE: "석탄 광석"
+      COPPER_ORE: "구리 광석"
+      IRON_ORE: "철 광석"
+      GOLD_ORE: "금 광석"
+      REDSTONE_ORE: "레드스톤 광석"
+      LAPIS_ORE: "청금석 광석"
+      DIAMOND_ORE: "다이아몬드 광석"
+      EMERALD_ORE: "에메랄드 광석"
+      DEEPSLATE_COPPER_ORE: "심층암 구리 광석"
+      DEEPSLATE_IRON_ORE: "심층암 철 광석"
+      DEEPSLATE_GOLD_ORE: "심층암 금 광석"
+      DEEPSLATE_REDSTONE_ORE: "심층암 레드스톤 광석"
+      DEEPSLATE_LAPIS_ORE: "심층암 청금석 광석"
+      DEEPSLATE_DIAMOND_ORE: "심층암 다이아몬드 광석"
+
+  # ---- 광물 가공품 ----
+  광물:
+    required: 1
+    consume: false
+    reward: 2
+    items:
+      COAL: "석탄"
+      RAW_IRON: "철 원석"
+      RAW_COPPER: "구리 원석"
+      RAW_GOLD: "금 원석"
+      IRON_INGOT: "철괴"
+      COPPER_INGOT: "구리괴"
+      GOLD_INGOT: "금괴"
+      DIAMOND: "다이아몬드"
+      EMERALD: "에메랄드"
+      LAPIS_LAZULI: "청금석"
+      REDSTONE: "레드스톤"
+      QUARTZ: "석영"
+      NETHERITE_SCRAP: "네더라이트 파편"
+      NETHERITE_INGOT: "네더라이트 주괴"
+      AMETHYST_SHARD: "자수정 조각"
+
+  # ---- 나무 원목 ----
+  나무원목:
+    required: 10
+    consume: true
+    items:
+      OAK_LOG: "참나무 원목"
+      SPRUCE_LOG: "가문비나무 원목"
+      BIRCH_LOG: "자작나무 원목"
+      JUNGLE_LOG: "정글나무 원목"
+      ACACIA_LOG: "아카시아나무 원목"
+      DARK_OAK_LOG: "짙은 참나무 원목"
+      CHERRY_LOG: "벚나무 원목"
+      MANGROVE_LOG: "맹그로브 원목"
+      BAMBOO_BLOCK: "대나무 블록"
+      STRIPPED_BAMBOO_BLOCK: "껍질 벗긴 대나무 블록"
+
+  # ---- 나무 묘목 ----
+  나무묘목:
+    required: 10
+    consume: true
+    items:
+      OAK_SAPLING: "참나무 묘목"
+      SPRUCE_SAPLING: "가문비나무 묘목"
+      BIRCH_SAPLING: "자작나무 묘목"
+      JUNGLE_SAPLING: "정글나무 묘목"
+      ACACIA_SAPLING: "아카시아나무 묘목"
+      DARK_OAK_SAPLING: "짙은 참나무 묘목"
+      CHERRY_SAPLING: "벚나무 묘목"
+      MANGROVE_PROPAGULE: "맹그로브 주아"
+
+  # ---- 나무 잎 ----
+  나무잎:
+    required: 10
+    consume: true
+    items:
+      OAK_LEAVES: "참나무 잎"
+      SPRUCE_LEAVES: "가문비나무 잎"
+      BIRCH_LEAVES: "자작나무 잎"
+      JUNGLE_LEAVES: "정글나무 잎"
+      ACACIA_LEAVES: "아카시아나무 잎"
+      DARK_OAK_LEAVES: "짙은 참나무 잎"
+      CHERRY_LEAVES: "벚나무 잎"
+      MANGROVE_LEAVES: "맹그로브 잎"
+      APPLE: "사과"
+      PINK_PETALS: "분홍 꽃잎"
+      MANGROVE_ROOTS: "맹그로브 뿌리"
+      FLOWERING_AZALEA_LEAVES: "꽃 핀 진달래 잎"
+      AZALEA_LEAVES: "진달래 잎"
+
+  # ---- 체리나무 제품 (1.20.1) ----
+  체리나무:
+    required: 10
+    consume: true
+    items:
+      CHERRY_PLANKS: "벚나무 판자"
+      CHERRY_SIGN: "벚나무 표지판"
+      CHERRY_HANGING_SIGN: "벚나무 매달린 표지판"
+      CHERRY_FENCE: "벚나무 울타리"
+      CHERRY_FENCE_GATE: "벚나무 울타리 문"
+      CHERRY_DOOR: "벚나무 문"
+      CHERRY_TRAPDOOR: "벚나무 다락문"
+      CHERRY_BOAT: "벚나무 보트"
+      CHERRY_CHEST_BOAT: "벚나무 상자 보트"
+      CHERRY_PRESSURE_PLATE: "벚나무 감압판"
+      CHERRY_BUTTON: "벚나무 버튼"
+      CHERRY_SLAB: "벚나무 반블록"
+      CHERRY_STAIRS: "벚나무 계단"
+
+  # ---- 대나무 제품 (1.20.1) ----
+  대나무:
+    required: 10
+    consume: true
+    items:
+      BAMBOO_PLANKS: "대나무 판자"
+      BAMBOO_MOSAIC: "대나무 모자이크"
+      BAMBOO_MOSAIC_STAIRS: "대나무 모자이크 계단"
+      BAMBOO_MOSAIC_SLAB: "대나무 모자이크 반블록"
+      BAMBOO_SIGN: "대나무 표지판"
+      BAMBOO_HANGING_SIGN: "대나무 매달린 표지판"
+      BAMBOO_FENCE: "대나무 울타리"
+      BAMBOO_FENCE_GATE: "대나무 울타리 문"
+      BAMBOO_DOOR: "대나무 문"
+      BAMBOO_TRAPDOOR: "대나무 다락문"
+      BAMBOO_RAFT: "대나무 뗏목"
+      BAMBOO_CHEST_RAFT: "대나무 상자 뗏목"
+
+  # ---- 바다 ----
+  바다:
+    required: 10
+    consume: true
+    items:
+      DARK_PRISMARINE: "짙은 프리즈머린"
+      PRISMARINE_BRICKS: "프리즈머린 벽돌"
+      PRISMARINE: "프리즈머린"
+      SPONGE: "스펀지"
+      SEA_LANTERN: "바다 랜턴"
+      PRISMARINE_CRYSTALS: "프리즈머린 수정"
+      PRISMARINE_SHARD: "프리즈머린 조각"
+      SEA_PICKLE: "불우렁쉥이"
+      DRIED_KELP_BLOCK: "말린 다시마 블록"
+      LILY_PAD: "수련잎"
+      TURTLE_EGG: "거북 알"
+      GLOW_INK_SAC: "발광 먹물 주머니"
+      INK_SAC: "먹물 주머니"
+
+  # ---- 산호 ----
+  산호:
+    required: 10
+    consume: true
+    items:
+      TUBE_CORAL_BLOCK: "관 산호 블록"
+      BRAIN_CORAL_BLOCK: "뇌 산호 블록"
+      BUBBLE_CORAL_BLOCK: "거품 산호 블록"
+      FIRE_CORAL_BLOCK: "불 산호 블록"
+      HORN_CORAL_BLOCK: "뿔 산호 블록"
+      TUBE_CORAL: "관 산호"
+      BRAIN_CORAL: "뇌 산호"
+      BUBBLE_CORAL: "거품 산호"
+      FIRE_CORAL: "불 산호"
+      HORN_CORAL: "뿔 산호"
+      TUBE_CORAL_FAN: "관 산호 부채"
+      BRAIN_CORAL_FAN: "뇌 산호 부채"
+      BUBBLE_CORAL_FAN: "거품 산호 부채"
+      FIRE_CORAL_FAN: "불 산호 부채"
+      HORN_CORAL_FAN: "뿔 산호 부채"
+
+  # ---- 지하 ----
+  지하:
+    required: 10
+    consume: true
+    items:
+      SCULK_SHRIEKER: "스컬크 울음꾼"
+      COBWEB: "거미줄"
+      GLOW_LICHEN: "발광 이끼"
+      SPORE_BLOSSOM: "포자꽃"
+      BIG_DRIPLEAF: "큰 드립리프"
+      SMALL_DRIPLEAF: "작은 드립리프"
+      GLOW_BERRIES: "발광 열매"
+      HANGING_ROOTS: "매달린 뿌리"
+      POINTED_DRIPSTONE: "뾰족한 드립스톤"
+      SMALL_AMETHYST_BUD: "작은 자수정 싹"
+      AMETHYST_CLUSTER: "자수정 군집"
+      SCULK: "스컬크"
+      SCULK_VEIN: "스컬크 핏줄"
+
+  # ---- 동물 전리품 ----
+  동물전리품:
+    required: 10
+    consume: true
+    items:
+      FEATHER: "깃털"
+      RABBIT_HIDE: "토끼 가죽"
+      RABBIT_FOOT: "토끼 발"
+      EGG: "달걀"
+      LEATHER: "가죽"
+      SCUTE: "거북 등딱지 조각"
+
+  # ---- 몬스터 전리품 ----
+  몬스터전리품:
+    required: 10
+    consume: true
+    items:
+      ROTTEN_FLESH: "썩은 살점"
+      BONE: "뼈"
+      GUNPOWDER: "화약"
+      SPIDER_EYE: "거미 눈"
+      SLIME_BLOCK: "슬라임 블록"
+      PHANTOM_MEMBRANE: "팬텀 막"
+
+  # ---- 작물 ----
+  작물:
+    required: 10
+    consume: true
+    reward: 1
+    items:
+      WHEAT: "밀"
+      CARROT: "당근"
+      POTATO: "감자"
+      BEETROOT: "비트"
+      MELON_SLICE: "수박 조각"
+      PUMPKIN: "호박"
+      SUGAR_CANE: "사탕수수"
+      BAMBOO: "대나무"
+      CACTUS: "선인장"
+      COCOA_BEANS: "코코아 콩"
+      NETHER_WART: "네더 사마귀"
+      SWEET_BERRIES: "달콤한 열매"
+
+  # ---- 벌 ----
+  벌:
+    required: 10
+    consume: true
+    items:
+      BEE_NEST: "벌집"
+      HONEYCOMB: "벌집 조각"
+      HONEY_BOTTLE: "꿀이 담긴 병"
+      HONEY_BLOCK: "꿀 블록"
+
+  # ---- 음식 ----
+  음식:
+    required: 10
+    consume: true
+    items:
+      BREAD: "빵"
+      COOKED_BEEF: "스테이크"
+      COOKED_CHICKEN: "익힌 닭고기"
+      COOKED_COD: "익힌 대구"
+      COOKED_SALMON: "익힌 연어"
+      COOKED_PORKCHOP: "익힌 돼지고기"
+      COOKED_MUTTON: "익힌 양고기"
+      COOKED_RABBIT: "익힌 토끼고기"
+      COOKIE: "쿠키"
+      CAKE: "케이크"
+      PUMPKIN_PIE: "호박 파이"
+      BAKED_POTATO: "구운 감자"
+      GOLDEN_APPLE: "황금 사과"
+      BEETROOT_SOUP: "비트 수프"
+      MUSHROOM_STEW: "버섯 스튜"
+      RABBIT_STEW: "토끼 스튜"
+      SUSPICIOUS_STEW: "수상한 스튜"
+
+  # ---- 기타 ----
+  기타:
+    required: 10
+    consume: true
+    items:
+      BELL: "종"
+      VINE: "덩굴"
+      WHITE_WOOL: "하얀 양털"
+      BROWN_MUSHROOM_BLOCK: "갈색 버섯 블록"
+      MUSHROOM_STEM: "버섯 줄기"
+      RED_MUSHROOM_BLOCK: "빨간 버섯 블록"
+      ICE: "얼음"
+      SNOW_BLOCK: "눈 블록"
+      POWDER_SNOW_BUCKET: "가루눈 양동이"
+      FLINT: "부싯돌"
+      OXIDIZED_COPPER: "산화된 구리"
+      CLAY: "점토"
+      TERRACOTTA: "테라코타"
+
+  # ---- 네더 월드 ----
+  네더월드:
+    required: 10
+    consume: true
+    items:
+      OBSIDIAN: "흑요석"
+      CRYING_OBSIDIAN: "울고 있는 흑요석"
+      NETHERRACK: "네더랙"
+      BLACKSTONE: "흑암"
+      BASALT: "현무암"
+      CRIMSON_NYLIUM: "진홍빛 네이리움"
+      WARPED_NYLIUM: "뒤틀린 네이리움"
+      SOUL_SAND: "영혼 모래"
+      SOUL_SOIL: "영혼 흙"
+      NETHER_GOLD_ORE: "네더 금 광석"
+      GILDED_BLACKSTONE: "금박 흑암"
+      NETHER_QUARTZ_ORE: "네더 석영 광석"
+      MAGMA_BLOCK: "마그마 블록"
+      ANCIENT_DEBRIS: "고대 잔해"
+      GLOWSTONE: "발광석"
+      CRIMSON_STEM: "진홍빛 자루"
+      WARPED_STEM: "뒤틀린 자루"
+      WARPED_WART_BLOCK: "뒤틀린 사마귀 블록"
+      CRIMSON_FUNGUS: "진홍빛 균"
+      WARPED_FUNGUS: "뒤틀린 균"
+      GHAST_TEAR: "가스트 눈물"
+      BLAZE_ROD: "블레이즈 막대"
+      SHROOMLIGHT: "버섯불"
+      SPECTRAL_ARROW: "분광 화살"
+      RED_NETHER_BRICKS: "붉은 네더 벽돌"
+      RESPAWN_ANCHOR: "리스폰 정박기"
+      LODESTONE: "자석석"
+      NETHER_BRICK: "네더 벽돌"
+      POLISHED_BLACKSTONE: "광택 흑암"
+
+  # ---- 엔더 월드 ----
+  엔더월드:
+    required: 10
+    consume: true
+    items:
+      ENDER_PEARL: "엔더 진주"
+      END_STONE: "엔드 석재"
+      DRAGON_BREATH: "드래곤의 숨결"
+      CHORUS_FRUIT: "후렴과"
+      CHORUS_FLOWER: "후렴화"
+      END_ROD: "엔드 막대"
+      PURPUR_BLOCK: "퍼퍼 블록"
+      SHULKER_SHELL: "셜커 껍데기"
+      END_STONE_BRICKS: "엔드 석재 벽돌"
+      ENDER_EYE: "엔더의 눈"
+      ENDER_CHEST: "엔더 상자"
+      SHULKER_BOX: "셜커 상자"
+      PURPUR_PILLAR: "퍼퍼 기둥"
+      PURPUR_STAIRS: "퍼퍼 계단"
+      POPPED_CHORUS_FRUIT: "튀긴 후렴과"
+
+  # ---- 물고기 ----
+  물고기:
+    required: 5
+    consume: true
+    reward: 3
+    items:
+      COD: "대구"
+      SALMON: "연어"
+      TROPICAL_FISH: "열대어"
+      PUFFERFISH: "복어"
+
+  # ---- 물고기 양동이 ----
+  물고기양동이:
+    required: 10
+    consume: true
+    items:
+      SALMON_BUCKET: "연어 양동이"
+      PUFFERFISH_BUCKET: "복어 양동이"
+      COD_BUCKET: "대구 양동이"
+      TROPICAL_FISH_BUCKET: "열대어 양동이"
+      TADPOLE_BUCKET: "올챙이 양동이"
+      AXOLOTL_BUCKET: "아홀로틀 양동이"
+
+  # ==========================================
+  # 희귀 카테고리 (consume: false, required: 1)
+  # ==========================================
+
+  # ---- 낚시 잡템 ----
+  낚시잡템:
+    required: 1
+    consume: false
+    reward: 2
+    items:
+      LILY_PAD: "수련잎"
+      BOWL: "그릇"
+      LEATHER_BOOTS: "가죽 부츠"
+      STRING: "실"
+      TRIPWIRE_HOOK: "철사 덫 갈고리"
+      STICK: "막대기"
+
+  # ---- 희귀 낚시 아이템 ----
+  희귀낚시:
+    required: 1
+    consume: false
+    reward: 10
+    items:
+      NAUTILUS_SHELL: "앵무조개 껍데기"
+      SADDLE: "안장"
+      NAME_TAG: "이름표"
+      BOW: "활"
+      FISHING_ROD: "낚싯대"
+      ENCHANTED_BOOK: "마법이 부여된 책"
+
+  # ---- 고고학 (1.20.1) ----
+  고고학:
+    required: 1
+    consume: false
+    items:
+      BRUSH: "솔"
+      SUSPICIOUS_SAND: "수상한 모래"
+      SUSPICIOUS_GRAVEL: "수상한 자갈"
+      DECORATED_POT: "장식 항아리"
+      CALIBRATED_SCULK_SENSOR: "교정된 스컬크 센서"
+
+  # ---- 고대 / 도자기 조각 ----
+  고대:
+    required: 1
+    consume: false
+    items:
+      SNIFFER_EGG: "스니퍼 알"
+      TORCHFLOWER: "횃불꽃"
+      PITCHER_PLANT: "투수꽃"
+      TORCHFLOWER_SEEDS: "횃불꽃 씨앗"
+      PITCHER_POD: "투수꽃 꼬투리"
+      MINER_POTTERY_SHERD: "광부 도자기 조각"
+      MOURNER_POTTERY_SHERD: "애도자 도자기 조각"
+      PLENTY_POTTERY_SHERD: "풍요 도자기 조각"
+      PRIZE_POTTERY_SHERD: "상품 도자기 조각"
+      SHEAF_POTTERY_SHERD: "다발 도자기 조각"
+      SHELTER_POTTERY_SHERD: "피난처 도자기 조각"
+      SKULL_POTTERY_SHERD: "해골 도자기 조각"
+      HEART_POTTERY_SHERD: "하트 도자기 조각"
+      FRIEND_POTTERY_SHERD: "친구 도자기 조각"
+      HOWL_POTTERY_SHERD: "울부짖음 도자기 조각"
+      HEARTBREAK_POTTERY_SHERD: "상심 도자기 조각"
+      SNORT_POTTERY_SHERD: "콧김 도자기 조각"
+      ANGLER_POTTERY_SHERD: "낚시꾼 도자기 조각"
+      ARCHER_POTTERY_SHERD: "궁수 도자기 조각"
+      ARMS_UP_POTTERY_SHERD: "만세 도자기 조각"
+      BLADE_POTTERY_SHERD: "검 도자기 조각"
+      BREWER_POTTERY_SHERD: "양조가 도자기 조각"
+      BURN_POTTERY_SHERD: "화염 도자기 조각"
+      DANGER_POTTERY_SHERD: "위험 도자기 조각"
+      EXPLORER_POTTERY_SHERD: "탐험가 도자기 조각"
+
+  # ---- 대장장이 형판 ----
+  대장장이형판:
+    required: 1
+    consume: false
+    items:
+      RIB_ARMOR_TRIM_SMITHING_TEMPLATE: "갈비 갑옷 장식 대장장이 형판"
+      NETHERITE_UPGRADE_SMITHING_TEMPLATE: "네더라이트 업그레이드 형판"
+      SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE: "주둥이 갑옷 장식 형판"
+      HOST_ARMOR_TRIM_SMITHING_TEMPLATE: "주인 갑옷 장식 형판"
+      SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE: "조형사 갑옷 장식 형판"
+      WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE: "길잡이 갑옷 장식 형판"
+      SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE: "보초 갑옷 장식 형판"
+      SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE: "침묵 갑옷 장식 형판"
+      VEX_ARMOR_TRIM_SMITHING_TEMPLATE: "벡스 갑옷 장식 형판"
+      WILD_ARMOR_TRIM_SMITHING_TEMPLATE: "야생 갑옷 장식 형판"
+      DUNE_ARMOR_TRIM_SMITHING_TEMPLATE: "사구 갑옷 장식 형판"
+      EYE_ARMOR_TRIM_SMITHING_TEMPLATE: "눈 갑옷 장식 형판"
+      COAST_ARMOR_TRIM_SMITHING_TEMPLATE: "해안 갑옷 장식 형판"
+      TIDE_ARMOR_TRIM_SMITHING_TEMPLATE: "조수 갑옷 장식 형판"
+      WARD_ARMOR_TRIM_SMITHING_TEMPLATE: "수호 갑옷 장식 형판"
+      SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE: "첨탑 갑옷 장식 형판"
+      RAISER_ARMOR_TRIM_SMITHING_TEMPLATE: "제기 갑옷 장식 형판"
+
+  # ---- 음반 ----
+  음반:
+    required: 1
+    consume: false
+    items:
+      MUSIC_DISC_RELIC: "음반 - Relic"
+      MUSIC_DISC_PIGSTEP: "음반 - Pigstep"
+      MUSIC_DISC_5: "음반 - 5"
+      MUSIC_DISC_OTHERSIDE: "음반 - otherside"
+      MUSIC_DISC_WAIT: "음반 - wait"
+      MUSIC_DISC_11: "음반 - 11"
+      MUSIC_DISC_WARD: "음반 - ward"
+      MUSIC_DISC_13: "음반 - 13"
+      MUSIC_DISC_BLOCKS: "음반 - blocks"
+      MUSIC_DISC_CAT: "음반 - cat"
+      MUSIC_DISC_STAL: "음반 - stal"
+      MUSIC_DISC_MELLOHI: "음반 - mellohi"
+      MUSIC_DISC_MALL: "음반 - mall"
+      MUSIC_DISC_FAR: "음반 - far"
+      MUSIC_DISC_CHIRP: "음반 - chirp"
+      MUSIC_DISC_STRAD: "음반 - strad"
+
+  # ---- 양조 재료 ----
+  양조재료:
+    required: 1
+    consume: false
+    items:
+      GLASS_BOTTLE: "유리병"
+      FERMENTED_SPIDER_EYE: "발효된 거미 눈"
+      GLISTERING_MELON_SLICE: "반짝이는 수박 조각"
+      GOLDEN_CARROT: "황금 당근"
+      MAGMA_CREAM: "마그마 크림"
+      BREWING_STAND: "양조기"
+      BLAZE_POWDER: "블레이즈 가루"
+
+  # ---- 염소 뿔 ----
+  염소뿔:
+    required: 1
+    consume: false
+    items:
+      GOAT_HORN: "염소 뿔"
+
+  # ---- 희귀 물품 ----
+  희귀물품:
+    required: 1
+    consume: false
+    items:
+      ZOMBIE_HEAD: "좀비 머리"
+      SKELETON_SKULL: "스켈레톤 해골"
+      CREEPER_HEAD: "크리퍼 머리"
+      PIGLIN_HEAD: "피글린 머리"
+      DRAGON_HEAD: "드래곤 머리"
+      DEEPSLATE_COAL_ORE: "심층암 석탄 광석"
+      DEEPSLATE_EMERALD_ORE: "심층암 에메랄드 광석"
+      SPYGLASS: "망원경"
+      WITHER_ROSE: "위더 장미"
+      SCULK_CATALYST: "스컬크 촉매"
+      ENCHANTED_GOLDEN_APPLE: "마법이 부여된 황금 사과"
+      EXPERIENCE_BOTTLE: "경험치 병"
+      HEART_OF_THE_SEA: "바다의 심장"
+      TRIDENT: "삼지창"
+      LEATHER_HORSE_ARMOR: "가죽 말 갑옷"
+      GOLDEN_HORSE_ARMOR: "금 말 갑옷"
+      IRON_HORSE_ARMOR: "철 말 갑옷"
+      DIAMOND_HORSE_ARMOR: "다이아몬드 말 갑옷"
+      TOTEM_OF_UNDYING: "불사의 토템"
+      PIGLIN_BANNER_PATTERN: "피글린 현수막 무늬"
+      WITHER_SKELETON_SKULL: "위더 스켈레톤 해골"
+      CONDUIT: "도관"
+      RECOVERY_COMPASS: "복구 나침반"
+      ECHO_SHARD: "메아리 조각"
+
+  # ---- 전설 등급 ----
+  전설등급:
+    required: 1
+    consume: false
+    reward: 15
+    items:
+      DRAGON_EGG: "드래곤 알"
+      NETHER_STAR: "네더 별"
+      ELYTRA: "겉날개"
+      BEACON: "신호기"
+
+# ============================================
+# 마일스톤 보상
+# ============================================
+# 해당 개수 도감 등록 시 보상 지급
+# [2026-01-31] 후반 보상 대폭 상향 + 중후반 아이템 보상 추가
+#
+# items 형식:
+#   - "lamp:TOOL_LAMP:1"           → 도구 램프 1개
+#   - "lamp:WEAPON_LAMP:1"         → 무기 램프 1개
+#   - "lamp:ARMOR_LAMP:1"          → 방어구 램프 1개
+#   - "enchant_random:S:1"         → 랜덤 S등급 인챈트북 1개
+#   - "scroll:destroy:1"           → 파괴방지 주문서 1개
+#   - "scroll:downgrade:1"         → 하락방지 주문서 1개
+# ============================================
+# 마일스톤 보상 (2026-02-01 5배 버프)
+# ============================================
+milestones:
+  # === 초반 마일스톤 (입문용) ===
+  10:
+    bottcoin: 50
+    bd: 5000
+  25:
+    bottcoin: 150
+    bd: 25000
+  
+  # === 중반 마일스톤 (아이템 지급 시작) ===
+  50:
+    bottcoin: 500
+    bd: 100000
+    items:
+      - "enchant_random:A:5"
+  75:
+    bottcoin: 1250
+    bd: 250000
+    items:
+      - "enchant_random:A:10"
+  100:
+    bottcoin: 2500
+    bd: 500000
+    items:
+      - "enchant_random:B:15"
+      - "lamp:TOOL_LAMP:5"
+  
+  # === 후반 마일스톤 (고급 보상) ===
+  150:
+    bottcoin: 7500
+    bd: 1500000
+    items:
+      - "enchant_random:A:15"
+      - "lamp:WEAPON_LAMP:5"
+      - "scroll:destroy:5"
+  200:
+    bottcoin: 15000
+    bd: 3000000
+    items:
+      - "enchant_random:S:10"
+      - "lamp:ARMOR_LAMP:5"
+      - "scroll:downgrade:5"
+  250:
+    bottcoin: 30000
+    bd: 6000000
+    items:
+      - "enchant_random:S:15"
+      - "lamp:WEAPON_LAMP:10"
+      - "lamp:ARMOR_LAMP:5"
+      - "scroll:destroy:10"
+      - "scroll:downgrade:5"
+  
+  # === 최종 마일스톤 (엔드게임 보상) ===
+  300:
+    bottcoin: 60000
+    bd: 12500000
+    items:
+      - "enchant_random:S:25"
+      - "lamp:WEAPON_LAMP:10"
+      - "lamp:ARMOR_LAMP:10"
+      - "lamp:UNIVERSAL_LAMP:5"
+      - "scroll:destroy:15"
+      - "scroll:downgrade:10"
+  350:
+    bottcoin: 125000
+    bd: 25000000
+    items:
+      - "enchant_random:S:35"
+      - "lamp:UNIVERSAL_LAMP:10"
+      - "scroll:destroy:25"
+      - "scroll:downgrade:15"
+  400:
+    bottcoin: 250000
+    bd: 50000000
+    items:
+      - "enchant_random:S:50"
+      - "lamp:UNIVERSAL_LAMP:15"
+      - "lamp:WEAPON_LAMP:15"
+      - "lamp:ARMOR_LAMP:15"
+      - "scroll:destroy:25"
+      - "scroll:downgrade:25"
+
+# ============================================
+# 기본 보상 (reward 미지정 시)
+# ============================================
+defaults:
+  # 소비형 아이템 (consume: true)
+  consume_reward: 1
+  # 비소비형 아이템 (consume: false)
+  keep_reward: 3

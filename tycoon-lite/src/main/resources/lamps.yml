@@ -1,0 +1,563 @@
+# ============================================
+# Tycoon Lite - 램프 효과 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+# [2026-02-02] v2: UNIVERSAL 효과 재분류 (타입별 분리), CROP_COMBO/SILK_TOUCH_PRO/COMPOST_BONUS 추가
+# [2026-02-02] v3: 세분화 램프타입(PICKAXE/HOE/SHOVEL/AXE/FISHING) → TOOL_LAMP로 통합
+config-version: 3
+# 변경 후 /tycoon reload 로 적용
+# ============================================
+# 
+# 희귀도별 기본 가중치 [2026-01-31 인플레이션 대응 조정]:
+#   COMMON:    50.0 (~51%)
+#   UNCOMMON:  30.0 (~31%)
+#   RARE:      14.0 (~14%)
+#   EPIC:       2.0 (~2%)   ← 4.0에서 하향
+#   LEGENDARY:  0.5 (~0.5%) ← 1.0에서 하향
+#
+# enabled: 활성화 여부
+# weight: 등장 확률 가중치 (기본값 = 희귀도 가중치)
+# ============================================
+
+# 글로벌 설정
+global:
+  # 램프 효과 발동 시 메시지 표시 여부
+  showEffectMessages: true
+
+effects:
+
+  # ===============================================================
+  # COMMON 효과 - 범용 (UNIVERSAL_LAMP)
+  # ===============================================================
+  
+  # 가금류 수집: 닭/토끼 처치 시 전리품 추가
+  poultry_loot:
+    enabled: true
+    weight: 50.0
+    
+  # 가축 수집: 돼지/양 처치 시 전리품 추가
+  livestock_loot:
+    enabled: true
+    weight: 50.0
+    
+  # 소 수집: 소 처치 시 전리품 추가
+  cow_loot:
+    enabled: true
+    weight: 50.0
+    
+  # 몬스터 수집: 몬스터 처치 시 전리품 추가
+  monster_loot:
+    enabled: true
+    weight: 50.0
+    
+  # 뼛가루 수확: 농작물 수확 시 뼛가루 드랍
+  bone_meal_drop:
+    enabled: true
+    weight: 50.0
+    
+  # 바닐라 경험치 수집: 바닐라 경험치 획득량 증가 (직업 경험치 제외)
+  exp_boost:
+    enabled: true
+    weight: 50.0
+
+  # ===============================================================
+  # 곡괭이 효과 (PICKAXE_LAMP)
+  # ===============================================================
+  
+  # 자동 제련 (LEGENDARY): 광물 채굴 시 주괴로 드랍
+  auto_smelt:
+    enabled: true
+    weight: 0.5
+    
+  # 광역 채굴 II (EPIC): 3x3 영역 동시 채굴
+  multi_mine_2:
+    enabled: true
+    weight: 2.0
+    
+  # 광물 등급 (EPIC): 광물 추가 드랍 - LITE에서 비활성화
+  ore_grade:
+    enabled: false
+    weight: 2.0
+    
+  # 광역 채굴 (RARE): 상하좌우 1칸 동시 채굴
+  multi_mine:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 괭이 효과 (HOE_LAMP) - 작물 보너스 9단계
+  # ===============================================================
+  
+  # 풍요의 축복 IX (LEGENDARY)
+  crop_bonus_9:
+    enabled: true
+    weight: 0.5
+    
+  # 풍요의 축복 VIII (EPIC)
+  crop_bonus_8:
+    enabled: true
+    weight: 2.0
+    
+  # 풍요의 축복 VII (EPIC)
+  crop_bonus_7:
+    enabled: true
+    weight: 2.0
+    
+  # 풍요의 축복 VI (RARE)
+  crop_bonus_6:
+    enabled: true
+    weight: 14.0
+    
+  # 풍요의 축복 V (RARE)
+  crop_bonus_5:
+    enabled: true
+    weight: 14.0
+    
+  # 풍요의 축복 IV (UNCOMMON)
+  crop_bonus_4:
+    enabled: true
+    weight: 30.0
+    
+  # 풍요의 축복 III (UNCOMMON)
+  crop_bonus_3:
+    enabled: true
+    weight: 30.0
+    
+  # 풍요의 축복 II (COMMON)
+  crop_bonus_2:
+    enabled: true
+    weight: 50.0
+    
+  # 풍요의 축복 I (COMMON)
+  crop_bonus_1:
+    enabled: true
+    weight: 50.0
+    
+  # 씨앗 축복 III (RARE)
+  seed_bonus_3:
+    enabled: true
+    weight: 14.0
+    
+  # 씨앗 축복 II (UNCOMMON)
+  seed_bonus_2:
+    enabled: true
+    weight: 30.0
+    
+  # 씨앗 축복 I (COMMON)
+  seed_bonus_1:
+    enabled: true
+    weight: 50.0
+
+  # ===============================================================
+  # 삽 효과 (SHOVEL_LAMP)
+  # ===============================================================
+  
+  # 유리 세공 (RARE): 모래 채굴 시 유리로 드랍
+  sand_to_glass:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 도끼 효과 (AXE_LAMP)
+  # ===============================================================
+  
+  # 벌목꾼 III (EPIC): 위로 5칸 동시 채굴
+  tree_feller_3:
+    enabled: true
+    weight: 2.0
+    
+  # 벌목꾼 II (RARE): 위로 4칸 동시 채굴
+  tree_feller_2:
+    enabled: true
+    weight: 14.0
+    
+  # 벌목꾼 I (UNCOMMON): 위로 3칸 동시 채굴
+  tree_feller_1:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 낚싯대 효과 (FISHING_LAMP)
+  # ===============================================================
+  
+  # 빠른 입질 (UNCOMMON)
+  fish_speed:
+    enabled: true
+    weight: 30.0
+    
+  # 보물 탐색 (RARE) - LITE에서 비활성화
+  fish_treasure:
+    enabled: false
+    weight: 14.0
+    
+  # 희귀 어종 (RARE) - LITE에서 비활성화
+  rare_fish:
+    enabled: false
+    weight: 14.0
+    
+  # 쌍둥이 어획 (EPIC)
+  double_fish:
+    enabled: true
+    weight: 2.0
+    
+  # 쓰레기 감소 (COMMON)
+  junk_reduce:
+    enabled: true
+    weight: 50.0
+    
+  # 낚시 달인 (UNCOMMON)
+  fish_exp:
+    enabled: true
+    weight: 30.0
+    
+  # 자동 릴 (LEGENDARY)
+  auto_reel:
+    enabled: true
+    weight: 0.5
+    
+  # 비의 축복 (RARE)
+  rain_boost:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 전투 효과 - COMMON (범용)
+  # ===============================================================
+  
+  # 생명력 흡수: 공격 시 고정 체력 회복 (피해량 무관, 인챈트 흡혈과 구분)
+  lifesteal:
+    enabled: true
+    weight: 50.0
+    
+  # 치명타 확률
+  crit_chance:
+    enabled: true
+    weight: 50.0
+    
+  # 치명타 피해
+  crit_damage:
+    enabled: true
+    weight: 50.0
+    
+  # 회피
+  dodge:
+    enabled: true
+    weight: 50.0
+
+  # ===============================================================
+  # 전투 효과 - UNCOMMON/RARE
+  # ===============================================================
+  
+  # 광전사 (UNCOMMON)
+  berserker:
+    enabled: true
+    weight: 30.0
+    
+  # 치명타 중첩 (RARE)
+  crit_stack:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 전투 효과 - 무기 전용 (WEAPON_LAMP)
+  # ===============================================================
+  
+  # 공격력 강화 (UNCOMMON)
+  attack_boost:
+    enabled: true
+    weight: 30.0
+    
+  # 처형 (EPIC)
+  execute:
+    enabled: true
+    weight: 2.0
+    
+  # 독날 (UNCOMMON)
+  poison_blade:
+    enabled: true
+    weight: 30.0
+    
+  # 유령 일격 (EPIC)
+  phantom_strike:
+    enabled: true
+    weight: 2.0
+
+  # ===============================================================
+  # 전투 효과 - 방어구 전용 (ARMOR_LAMP)
+  # ===============================================================
+  
+  # 체력 강화 (UNCOMMON)
+  health_boost:
+    enabled: true
+    weight: 30.0
+    
+  # 재생 발동 (COMMON)
+  regen_proc:
+    enabled: true
+    weight: 50.0
+    
+  # 강철 의지 (RARE)
+  iron_will:
+    enabled: true
+    weight: 14.0
+    
+  # 가시 오라 (EPIC)
+  thorns_aura:
+    enabled: true
+    weight: 2.0
+    
+  # 수호천사 (RARE)
+  guardian_angel:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # LEGENDARY 효과
+  # ===============================================================
+  
+  # 거인 학살자 (무기)
+  giant_slayer:
+    enabled: true
+    weight: 0.5
+    
+  # 불사조의 축복 (방어구)
+  phoenix_blessing:
+    enabled: true
+    weight: 0.5
+    
+  # 미다스의 손 (도구)
+  midas_touch:
+    enabled: true
+    weight: 0.5
+
+  # ===============================================================
+  # 범용 효과 (UNIVERSAL_LAMP)
+  # ===============================================================
+  
+  # 행운 오라 (EPIC)
+  luck_aura:
+    enabled: true
+    weight: 2.0
+    
+  # 내구도 달인 (RARE) - Deprecated, 비활성화
+  durability_master:
+    enabled: false
+    weight: 14.0
+    
+  # 약점 간파 (RARE)
+  exploit_weakness:
+    enabled: true
+    weight: 14.0
+    
+  # 경험치 달인 (RARE)
+  exp_master:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 기동성 효과 (ARMOR_LAMP)
+  # ===============================================================
+  
+  # 순간 가속 (RARE)
+  sprint_burst:
+    enabled: true
+    weight: 14.0
+    
+  # 강화 점프 (UNCOMMON)
+  enhanced_jump:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 신규 무기 효과 (WEAPON_LAMP) - Phase 4
+  # ===============================================================
+  
+  # 연쇄 번개 (EPIC): 주변 적에게 번개 연쇄
+  chain_lightning:
+    enabled: true
+    weight: 2.0
+    
+  # 흡수 (RARE): 킬 시 보호막 획득
+  absorb:
+    enabled: true
+    weight: 14.0
+    
+  # 죽음의 표식 (RARE): 3연속 공격 시 추가 피해
+  death_mark:
+    enabled: true
+    weight: 14.0
+    
+  # 기습 (UNCOMMON): 첫 공격 추가 피해
+  ambush:
+    enabled: true
+    weight: 30.0
+    
+  # 연속 공격 (UNCOMMON): 연속 공격 피해 증가
+  combo:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 신규 방어구 효과 (ARMOR_LAMP) - Phase 4
+  # ===============================================================
+  
+  # 속도 희생 (RARE): 이속 감소, 피해 감소
+  speed_sacrifice:
+    enabled: true
+    weight: 14.0
+    
+  # 격노 (UNCOMMON): 저체력 시 공격속도 증가
+  rage:
+    enabled: true
+    weight: 30.0
+    
+  # 은신 (RARE): 비전투 시 반투명
+  stealth:
+    enabled: true
+    weight: 14.0
+    
+  # 최후의 저항 (LEGENDARY): 치명상 시 무적
+  last_stand:
+    enabled: true
+    weight: 0.5
+    
+  # 파쇄 저항 (UNCOMMON): 폭발 피해 감소
+  shatter_resist:
+    enabled: true
+    weight: 30.0
+    
+  # 반격 (RARE): 피격 시 공격력 증가
+  counter:
+    enabled: true
+    weight: 14.0
+
+  # ===============================================================
+  # 신규 도구 효과 (TOOL_LAMP) - Phase 4
+  # ===============================================================
+  
+  # 황금 손길 (RARE): 채굴 시 금 조각 획득
+  golden_touch:
+    enabled: true
+    weight: 14.0
+    
+  # 풍년 (UNCOMMON): 자동 재파종
+  bountiful:
+    enabled: true
+    weight: 30.0
+    
+  # 조류 감지 (UNCOMMON): 낚시 시간 추가 감소
+  current_sense:
+    enabled: true
+    weight: 30.0
+    
+  # 목재상 (UNCOMMON): 원목 추가 드랍
+  lumber_trader:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 신규 범용 효과 (UNIVERSAL_LAMP) - Phase 4
+  # ===============================================================
+  
+  # 응급 처치 (UNCOMMON): 저체력 시 재생
+  first_aid:
+    enabled: true
+    weight: 30.0
+    
+  # 보물 사냥꾼 (RARE): 희귀 드랍 확률 증가
+  treasure_hunter:
+    enabled: true
+    weight: 14.0
+    
+  # 집중 (UNCOMMON): 비전투 시 다음 공격 치명타
+  focus:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 비활성화된 효과 - LITE 버전에서 사용 안 함
+  # ===============================================================
+  
+  # 헌터 PvP 전용
+  bluezone_resist:
+    enabled: false
+    weight: 14.0
+    
+  respawn_accel:
+    enabled: false
+    weight: 30.0
+    
+  kill_momentum:
+    enabled: true     # 몹 킬에도 적용되므로 활성화
+    weight: 2.0
+    
+  combat_instinct:
+    enabled: false    # CombatTagManager 필요
+    weight: 14.0
+    
+  # HCL 부스트
+  hcl_exp_boost:
+    enabled: false
+    weight: 30.0
+    
+  augment_luck:
+    enabled: false
+    weight: 2.0
+    
+  # 미구현
+  magnetic_field:
+    enabled: false
+    weight: 30.0
+
+  # ===============================================================
+  # 신규 도구 효과 (v2 추가)
+  # ===============================================================
+  
+  # 수확 콤보 (RARE): 연속 수확 시 스택당 추가 드롭
+  crop_combo:
+    enabled: true
+    weight: 14.0
+    
+  # 정밀 채굴 (EPIC): 섬세한 손길 사용 시 경험치 획득
+  silk_touch_pro:
+    enabled: true
+    weight: 2.0
+    
+  # 퇴비 생성 (UNCOMMON): 씨앗 획득 시 뼛가루로 변환
+  compost_bonus:
+    enabled: true
+    weight: 30.0
+
+  # ===============================================================
+  # 활 효과 (WEAPON_LAMP에 통합) - Phase 4 추가 예정
+  # ===============================================================
+  
+  # 폭발 화살 (EPIC): 명중 시 폭발 - 활/석궁 전용
+  explosive_arrow:
+    enabled: true
+    weight: 2.0
+    
+  # 분열 화살 (RARE): 화살 분열 - 활/석궁 전용
+  split_arrow:
+    enabled: true
+    weight: 14.0
+    
+  # 흡혈 화살 (UNCOMMON): 명중 시 체력 회복 - 활/석궁 전용
+  vampiric_arrow:
+    enabled: true
+    weight: 30.0
+    
+  # 독 화살 (COMMON): 명중 시 독 부여 - 활/석궁 전용
+  poison_arrow:
+    enabled: true
+    weight: 50.0
+    
+  # 번개 화살 (LEGENDARY): 명중 시 번개 - 활/석궁 전용
+  thunder_arrow:
+    enabled: true
+    weight: 0.5
+    
+  # 관통 사격 (RARE): 적 관통 - 활/석궁 전용
+  piercing_shot:
+    enabled: true
+    weight: 14.0

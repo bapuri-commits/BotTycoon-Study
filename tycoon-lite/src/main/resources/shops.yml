@@ -1,0 +1,342 @@
+# ============================================================
+# TycoonLite Shop Configuration
+# Phase 3.B - 직업 상점 설정
+# ============================================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+# [2026-02-01] v2: 구리 판매가 1.5배 상향
+config-version: 2
+#
+# [설정 가이드]
+# - buy: 플레이어가 지불하는 금액 (NPC에서 구매)
+# - sell: 플레이어가 받는 금액 (NPC에 판매)
+# - -1 또는 생략: 해당 거래 불가
+#
+# 예시:
+#   IRON_INGOT: { buy: 150, sell: 75 }  # 구매+판매 가능
+#   RAW_IRON: { sell: 50 }              # 판매만 가능
+#   FISHING_ROD: { buy: 100 }           # 구매만 가능
+#
+# [주의] Material 이름은 정확히 입력해야 합니다.
+# 참고: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+#
+# [동적 가격 및 시장 조작 방지 설정]
+# → config.yml의 dynamicPrice 및 shop.manipulationGuard 섹션 참조
+# ============================================================
+
+# ============================================================
+# 직업 상점 (Job Shops)
+# ============================================================
+job_shops:
+  
+  # ----------------------------------------------------------
+  # 광부 상점 (Miner Shop)
+  # ----------------------------------------------------------
+  miner:
+    enabled: true
+    display_name: "광부 상점"
+    items:
+      # === 기본 광물 (구매+판매) ===
+      COAL:             { buy: 40, sell: 20 }
+      # [2026-02-01] 구리 판매가 1.5배 상향
+      COPPER_INGOT:     { buy: 80, sell: 60 }       # sell: 40 → 60
+      IRON_INGOT:       { buy: 150, sell: 75 }
+      GOLD_INGOT:       { buy: 300, sell: 150 }
+      LAPIS_LAZULI:     { buy: 80, sell: 40 }
+      REDSTONE:         { buy: 64, sell: 32 }
+      QUARTZ:           { buy: 90, sell: 45 }
+      AMETHYST_SHARD:   { buy: 130, sell: 65 }
+      
+      # === 고급 광물 ===
+      DIAMOND:          { buy: 1000, sell: 500 }
+      EMERALD:          { buy: 900, sell: 450 }
+      NETHERITE_INGOT:  { buy: 9000, sell: 4500 }
+      
+      # === 광물 블록 (주괴 × 9) ===
+      COAL_BLOCK:       { buy: 360, sell: 180 }
+      # [2026-02-01] 구리 판매가 1.5배 상향
+      COPPER_BLOCK:     { buy: 720, sell: 540 }     # sell: 360 → 540
+      IRON_BLOCK:       { buy: 1350, sell: 675 }
+      GOLD_BLOCK:       { buy: 2700, sell: 1350 }
+      LAPIS_BLOCK:      { buy: 720, sell: 360 }
+      REDSTONE_BLOCK:   { buy: 576, sell: 288 }
+      DIAMOND_BLOCK:    { buy: 9000, sell: 4500 }
+      EMERALD_BLOCK:    { buy: 8100, sell: 4050 }
+      NETHERITE_BLOCK:  { buy: 81000, sell: 40500 }
+      
+      # === 산화 구리 (판매만 - 시간 투자 보상) ===
+      # [2026-02-01] 구리 판매가 1.5배 상향
+      EXPOSED_COPPER:   { sell: 1080 }              # 720 → 1080
+      WEATHERED_COPPER: { sell: 1620 }              # 1080 → 1620
+      OXIDIZED_COPPER:  { sell: 2700 }              # 1800 → 2700
+      
+      # === 원석 (판매만 - 제련 유도) ===
+      # [2026-02-01] 구리 판매가 1.5배 상향
+      RAW_COPPER:       { sell: 45 }                # 30 → 45
+      RAW_IRON:         { sell: 50 }
+      RAW_GOLD:         { sell: 100 }
+  
+  # ----------------------------------------------------------
+  # 농부 상점 (Farmer Shop)
+  # [2026-01-29] 과일/블록/비료 추가, 묘목/꽃 제거
+  # ----------------------------------------------------------
+  farmer:
+    enabled: true
+    display_name: "농부 상점"
+    items:
+      # === 기본 작물 ===
+      WHEAT:            { buy: 20, sell: 10 }
+      CARROT:           { buy: 16, sell: 8 }
+      POTATO:           { buy: 16, sell: 8 }
+      BEETROOT:         { buy: 18, sell: 9 }
+      
+      # === 특수 작물 ===
+      MELON_SLICE:      { buy: 10, sell: 5 }
+      PUMPKIN:          { buy: 30, sell: 15 }
+      SUGAR_CANE:       { buy: 14, sell: 7 }
+      COCOA_BEANS:      { buy: 24, sell: 12 }
+      BAMBOO:           { buy: 8, sell: 4 }
+      CACTUS:           { buy: 12, sell: 6 }
+      
+      # === 네더 작물 ===
+      NETHER_WART:      { buy: 40, sell: 20 }
+      CRIMSON_FUNGUS:   { buy: 50, sell: 25 }
+      WARPED_FUNGUS:    { buy: 50, sell: 25 }
+      
+      # === 과일 (판매만) ===
+      APPLE:            { sell: 15 }
+      SWEET_BERRIES:    { sell: 8 }
+      GLOW_BERRIES:     { sell: 20 }
+      
+      # === 블록 (판매만) ===
+      HAY_BLOCK:        { sell: 90 }
+      MELON:            { sell: 45 }
+      
+      # === 씨앗 (구매+판매) ===
+      WHEAT_SEEDS:      { buy: 4, sell: 2 }
+      BEETROOT_SEEDS:   { buy: 8, sell: 4 }
+      MELON_SEEDS:      { buy: 20, sell: 10 }
+      PUMPKIN_SEEDS:    { buy: 20, sell: 10 }
+      
+      # === 비료 (구매만) ===
+      BONE_MEAL:        { buy: 50 }
+  
+  # ----------------------------------------------------------
+  # 어부 상점 (Fisher Shop)
+  # ----------------------------------------------------------
+  fisher:
+    enabled: true
+    display_name: "어부 상점"
+    items:
+      # === 생선 ===
+      COD:              { buy: 30, sell: 15 }
+      SALMON:           { buy: 40, sell: 20 }
+      TROPICAL_FISH:    { buy: 100, sell: 50 }
+      PUFFERFISH:       { buy: 80, sell: 40 }
+      
+      # === 조리된 생선 ===
+      COOKED_COD:       { buy: 50, sell: 25 }
+      COOKED_SALMON:    { buy: 70, sell: 35 }
+      
+      # === 낚시 전리품 (판매만 - 희귀템) ===
+      INK_SAC:          { sell: 20 }
+      GLOW_INK_SAC:     { sell: 80 }
+      NAUTILUS_SHELL:   { sell: 500 }
+      HEART_OF_THE_SEA: { sell: 5000 }
+      
+      # === 해양 식물 (판매만) ===
+      KELP:             { sell: 5 }
+      DRIED_KELP:       { sell: 8 }
+      SEA_PICKLE:       { sell: 30 }
+      SEAGRASS:         { sell: 3 }
+      
+      # === 낚시 쓰레기 (판매만 - 낮은 가격) ===
+      LILY_PAD:         { sell: 10 }
+      BOWL:             { sell: 2 }
+      LEATHER_BOOTS:    { sell: 15 }
+      
+      # === 프리즈머린 (판매만 - 해저 유적) ===
+      PRISMARINE_SHARD:    { sell: 40 }
+      PRISMARINE_CRYSTALS: { sell: 60 }
+      PRISMARINE:          { sell: 200 }
+      DARK_PRISMARINE:     { sell: 250 }
+      SEA_LANTERN:         { sell: 400 }
+
+# ============================================================
+# 마켓 상점 (Market Shops)
+# 동적 가격 + 비대칭 레벨 보너스
+# - sell_bonus_percent: 판매 시 레벨당 보너스 (낮게)
+# - buy_bonus_percent: 구매 시 레벨당 보너스 (높게 - 구매 억제)
+# ============================================================
+market_shops:
+
+  # ----------------------------------------------------------
+  # 음식 상점 (Food Shop)
+  # ----------------------------------------------------------
+  food:
+    enabled: true
+    display_name: "음식 상점"
+    sell_bonus_percent: 5.0   # 판매: 레벨당 +5%
+    buy_bonus_percent: 10.0   # 구매: 레벨당 +10%
+    items:
+      # === 조리된 고기 ===
+      # [삭제] COOKED_COD, COOKED_SALMON - 어부 상점과 중복
+      COOKED_BEEF:        { buy: 40, sell: 20 }
+      COOKED_PORKCHOP:    { buy: 40, sell: 20 }
+      COOKED_CHICKEN:     { buy: 30, sell: 15 }
+      COOKED_MUTTON:      { buy: 35, sell: 17 }
+      COOKED_RABBIT:      { buy: 35, sell: 17 }
+      
+      # === 빵/곡물 가공품 ===
+      BREAD:              { buy: 20, sell: 10 }
+      BAKED_POTATO:       { buy: 15, sell: 7 }
+      COOKIE:             { buy: 10, sell: 5 }
+      PUMPKIN_PIE:        { buy: 50, sell: 25 }
+      CAKE:               { buy: 150 }
+      
+      # === 스튜/복합 음식 ===
+      MUSHROOM_STEW:      { buy: 60, sell: 30 }
+      RABBIT_STEW:        { buy: 80, sell: 40 }
+      BEETROOT_SOUP:      { buy: 40, sell: 20 }
+      SUSPICIOUS_STEW:    { buy: 100, sell: 50 }
+      
+      # === 특수 음식 ===
+      GOLDEN_CARROT:      { buy: 100, sell: 50 }
+      GOLDEN_APPLE:       { buy: 500, sell: 250 }
+      ENCHANTED_GOLDEN_APPLE: { buy: 50000, sell: 25000 }
+      
+      # === 기타 음식 ===
+      # [삭제] APPLE, MELON_SLICE, SWEET_BERRIES, GLOW_BERRIES - 농부 상점과 중복
+      # [삭제] DRIED_KELP - 어부 상점과 중복
+      HONEY_BOTTLE:       { buy: 80, sell: 40 }
+      
+      # === 생고기 (판매만) ===
+      BEEF:               { sell: 10 }
+      PORKCHOP:           { sell: 10 }
+      CHICKEN:            { sell: 7 }
+      MUTTON:             { sell: 8 }
+      RABBIT:             { sell: 8 }
+
+  # ----------------------------------------------------------
+  # 전리품 상점 (Loot Shop)
+  # 몬스터 드롭 아이템 거래
+  # ----------------------------------------------------------
+  loot:
+    enabled: true
+    display_name: "전리품 상점"
+    sell_bonus_percent: 5.0
+    buy_bonus_percent: 10.0
+    items:
+      # === 오버월드 일반 몬스터 ===
+      ROTTEN_FLESH:       { sell: 5 }
+      BONE:               { sell: 10 }
+      SPIDER_EYE:         { sell: 15 }
+      STRING:             { sell: 8 }
+      GUNPOWDER:          { buy: 200, sell: 100 }
+      ARROW:              { sell: 5 }
+      SLIME_BALL:         { sell: 25 }
+      PHANTOM_MEMBRANE:   { sell: 100 }
+      LEATHER:            { sell: 15 }
+      FEATHER:            { sell: 5 }
+      EGG:                { sell: 3 }
+      
+      # === 특수 오버월드 ===
+      RABBIT_FOOT:        { sell: 200 }
+      RABBIT_HIDE:        { sell: 20 }
+      FERMENTED_SPIDER_EYE: { sell: 50 }
+      
+      # === 엔드 관련 (2배 인상) ===
+      ENDER_PEARL:        { sell: 300 }
+      SHULKER_SHELL:      { sell: 2000 }
+      DRAGON_BREATH:      { sell: 1000 }
+      CHORUS_FRUIT:       { sell: 60 }
+      POPPED_CHORUS_FRUIT: { sell: 100 }
+      
+      # === 네더 몬스터 (2배 인상) ===
+      BLAZE_ROD:          { sell: 200 }
+      BLAZE_POWDER:       { sell: 120 }
+      GHAST_TEAR:         { sell: 400 }
+      MAGMA_CREAM:        { sell: 160 }
+      WITHER_SKELETON_SKULL: { sell: 10000 }
+      
+      # === 보스 드롭 (10배 인상) ===
+      TOTEM_OF_UNDYING:   { sell: 100000 }
+      NETHER_STAR:        { sell: 500000 }
+      DRAGON_EGG:         { sell: 1000000 }
+      
+      # === 기타 ===
+      TRIDENT:            { sell: 15000 }
+      # [삭제] NAUTILUS_SHELL, HEART_OF_THE_SEA - 어부 상점과 중복
+      
+      # === 경험치 (구매+판매) ===
+      EXPERIENCE_BOTTLE:  { buy: 50, sell: 25 }
+
+# ============================================================
+# 일반 상점 (General Shops)
+# 고정 가격, 레벨 보너스 없음
+# ============================================================
+general_shops:
+
+  # ----------------------------------------------------------
+  # 동물 스폰알 상점 (Spawn Egg Shop)
+  # 구매만 가능 (판매 불가)
+  # ----------------------------------------------------------
+  spawnegg:
+    enabled: true
+    display_name: "동물 상점"
+    # [2026-02-01] 전체 5배 인상
+    items:
+      # === 가축 ===
+      COW_SPAWN_EGG:      { buy: 2500 }
+      PIG_SPAWN_EGG:      { buy: 2500 }
+      SHEEP_SPAWN_EGG:    { buy: 2500 }
+      CHICKEN_SPAWN_EGG:  { buy: 1500 }
+      GOAT_SPAWN_EGG:     { buy: 3000 }
+      MOOSHROOM_SPAWN_EGG: { buy: 10000 }
+      
+      # === 말/당나귀 계열 ===
+      HORSE_SPAWN_EGG:    { buy: 10000 }
+      DONKEY_SPAWN_EGG:   { buy: 7500 }
+      MULE_SPAWN_EGG:     { buy: 12500 }
+      LLAMA_SPAWN_EGG:    { buy: 5000 }
+      TRADER_LLAMA_SPAWN_EGG: { buy: 7500 }
+      CAMEL_SPAWN_EGG:    { buy: 15000 }
+      
+      # === 펫 ===
+      CAT_SPAWN_EGG:      { buy: 4000 }
+      WOLF_SPAWN_EGG:     { buy: 5000 }
+      PARROT_SPAWN_EGG:   { buy: 7500 }
+      RABBIT_SPAWN_EGG:   { buy: 2000 }
+      FOX_SPAWN_EGG:      { buy: 6000 }
+      OCELOT_SPAWN_EGG:   { buy: 5000 }
+      
+      # === 수중 동물 ===
+      TURTLE_SPAWN_EGG:   { buy: 7500 }
+      AXOLOTL_SPAWN_EGG:  { buy: 15000 }
+      DOLPHIN_SPAWN_EGG:  { buy: 12500 }
+      SQUID_SPAWN_EGG:    { buy: 2500 }
+      GLOW_SQUID_SPAWN_EGG: { buy: 5000 }
+      COD_SPAWN_EGG:      { buy: 1000 }
+      SALMON_SPAWN_EGG:   { buy: 1250 }
+      TROPICAL_FISH_SPAWN_EGG: { buy: 2500 }
+      PUFFERFISH_SPAWN_EGG: { buy: 2000 }
+      
+      # === 기타 동물 ===
+      BEE_SPAWN_EGG:      { buy: 10000 }
+      FROG_SPAWN_EGG:     { buy: 5000 }
+      TADPOLE_SPAWN_EGG:  { buy: 2500 }
+      BAT_SPAWN_EGG:      { buy: 1500 }
+      PANDA_SPAWN_EGG:    { buy: 15000 }
+      POLAR_BEAR_SPAWN_EGG: { buy: 12500 }
+      # ARMADILLO_SPAWN_EGG: 1.20.5+ (Minecraft 1.21)에서 추가됨 - 호환성을 위해 제외
+      
+      # === 골렘 ===
+      IRON_GOLEM_SPAWN_EGG: { buy: 25000 }
+      SNOW_GOLEM_SPAWN_EGG: { buy: 5000 }
+      
+      # === 주민 ===
+      VILLAGER_SPAWN_EGG: { buy: 15000 }
+      WANDERING_TRADER_SPAWN_EGG: { buy: 25000 }
+      
+      # === 특수 ===
+      ALLAY_SPAWN_EGG:    { buy: 25000 }
+      SNIFFER_SPAWN_EGG:  { buy: 50000 }

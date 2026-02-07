@@ -1,0 +1,279 @@
+# ============================================
+# Tycoon Lite - Plugin Configuration
+# ============================================
+# 버전은 pom.xml에서 자동으로 가져옴 (${project.version})
+
+name: TycoonLite
+version: '${project.version}'
+main: kr.bapuri.tycoon.TycoonPlugin
+api-version: '1.20'
+description: Tycoon Lite - VanillaPlus Minecraft Economy Plugin
+
+authors:
+  - Bapuri
+
+# ============================================
+# 필수 플러그인 (없으면 로드 안 됨)
+# ============================================
+depend:
+  - Vault
+  - LuckPerms
+  - Citizens
+  - WorldGuard
+
+# ============================================
+# 선택 플러그인 (있으면 연동, 없어도 동작)
+# ============================================
+softdepend:
+  - WorldEdit
+  - CoreProtect
+  - PlaceholderAPI
+  - Lands
+  - AngelChest
+  - OpenInv
+  - spark
+  - InventoryRollbackPlus
+  - CommandWhitelist
+  - IllegalStack
+  - TAB
+  - HolographicDisplays
+  - Plan
+  - DiscordSRV
+
+# ============================================
+# 로드 순서
+# ============================================
+load: POSTWORLD
+
+# ============================================
+# 명령어
+# ============================================
+commands:
+  tycoon:
+    description: Tycoon Lite 메인 명령어
+    usage: /<command> [subcommand]
+    aliases: [ty, tl]
+  eco:
+    description: 경제 관리 명령어 (관리자용)
+    usage: /eco <give|take|set|check> <player> [amount] [bd|bottcoin]
+    permission: tycoon.admin.eco
+  money:
+    description: 잔액 확인 명령어 (플레이어용)
+    usage: /money [player]
+    aliases: [돈, 잔액, bal, balance]
+  shopadmin:
+    description: 상점 관리 명령어 (관리자용)
+    usage: /shopadmin <open|list|info|reload> [args]
+    permission: tycoon.admin.shop
+    aliases: [sa]
+  villagertrade:
+    description: 주민 거래 관리 명령어 (관리자용)
+    usage: /villagertrade <info|reset|toggle> [player|@a]
+    permission: tycoon.admin.villagertrade
+    aliases: [vt]
+  xray:
+    description: X-ray 탐지 시스템 관리 (관리자용)
+    usage: /xray <inspect|toggle|status> [player]
+    permission: tycoon.admin.xray
+  pvpdamage:
+    description: Wild PvP 데미지 배율 토글 (관리자용)
+    usage: /pvpdamage <off|10|50|100|status>
+    permission: tycoon.admin.pvpdamage
+    aliases: [pvpd]
+  worldreset:
+    description: 월드 수동 리셋 (관리자용)
+    usage: /worldreset <wild|status> [confirm]
+    permission: tycoon.admin.worldreset
+    aliases: [wr]
+  worldtp:
+    description: 월드 텔레포트 (관리자용)
+    usage: /worldtp <town|wild|nether|end|list> [player]
+    permission: tycoon.admin.worldtp
+    aliases: [wtp]
+  job:
+    description: 직업 시스템 명령어
+    usage: /job [info|select|promote|requirements|miner|farmer|fisher|admin]
+    aliases: [jobs, 직업, miner, farmer, fisher, 광부, 농부, 어부]
+  codex:
+    description: 도감 시스템 명령어
+    usage: /codex [register|scan|help|페이지]
+    aliases: [도감]
+  codexadmin:
+    description: 도감 관리 명령어 (관리자용)
+    usage: /codexadmin <add|remove|reset|list|completeall> <player> [args]
+    permission: tycoon.admin.codex
+    aliases: [ca]
+  achievement:
+    description: 업적 시스템 명령어
+    usage: /achievement [카테고리|list|help]
+    aliases: [ach, 업적]
+  title:
+    description: 칭호 시스템 명령어
+    usage: /title [list|equip|unequip|help]
+    aliases: [칭호]
+  trade:
+    description: 거래 시스템 명령어
+    usage: /trade <player|accept|deny|cancel|confirm|complete|history>
+    aliases: [거래]
+  enchant:
+    description: 커스텀 인챈트 관리 명령어 (관리자용)
+    usage: /enchant <apply|give|list|reload> [args]
+    permission: tycoon.admin.enchant
+    aliases: [인챈트]
+  lamp:
+    description: 램프 시스템 관리 명령어 (관리자용)
+    usage: /lamp <apply|give|remove|list|reload> [args]
+    permission: tycoon.admin.lamp
+    aliases: [램프]
+  upgrade:
+    description: 강화 시스템 관리 명령어 (관리자용)
+    usage: /upgrade <set|reset|check|gui|reload> [args]
+    permission: tycoon.admin.upgrade
+    aliases: [강화]
+  coreitem:
+    description: 핵심 아이템 관리 명령어 (관리자용)
+    usage: /coreitem <give|list> [args]
+    permission: tycoon.admin.coreitem
+    aliases: [ci]
+  recovery:
+    description: Town 보관소 관리 명령어 (관리자 전용, 일반 플레이어는 NPC 이용)
+    usage: /recovery [list|count|<플레이어>]
+    permission: tycoon.admin.recovery
+    aliases: [보관소]
+  promotenpc:
+    description: 승급 NPC 관리 명령어 (관리자용)
+    usage: /promotenpc <set|remove|list> [job]
+    permission: tycoon.admin.npc
+    aliases: [pnpc]
+  bcshop:
+    description: BC 상점 관리 명령어 (관리자용)
+    usage: /bcshop <title|cosmetic|reload> [args]
+    permission: tycoon.admin.bcshop
+    aliases: [bc상점]
+  tax:
+    description: 세금 정보 조회 명령어 (플레이어용)
+    usage: /tax <info|land> [마을이름]
+    aliases: [세금]
+  landtax:
+    description: 토지세 관리 명령어 (관리자용)
+    usage: /landtax <villager|freeze|unfreeze|collect|info|reload> [args]
+    permission: tycoon.tax.admin
+    aliases: [토지세]
+
+# ============================================
+# 권한
+# ============================================
+permissions:
+  tycoon.admin:
+    description: 관리자 권한 (모든 관리 기능)
+    default: op
+    children:
+      tycoon.admin.eco: true
+      tycoon.admin.backup: true
+      tycoon.admin.shop: true
+      tycoon.admin.market: true
+      tycoon.admin.villagertrade: true
+      tycoon.admin.xray: true
+      tycoon.admin.pvpdamage: true
+      tycoon.admin.worldreset: true
+      tycoon.admin.worldtp: true
+      tycoon.admin.job: true
+      tycoon.admin.codex: true
+      tycoon.admin.enchant: true
+      tycoon.admin.lamp: true
+      tycoon.admin.upgrade: true
+      tycoon.admin.coreitem: true
+      tycoon.admin.recovery: true
+      tycoon.admin.npc: true
+      tycoon.admin.bcshop: true
+      tycoon.tax.admin: true
+  tycoon.admin.eco:
+    description: 경제 관리 명령어 권한
+    default: op
+  tycoon.admin.backup:
+    description: 백업 관리 명령어 권한
+    default: op
+  tycoon.admin.shop:
+    description: 상점 관리 명령어 권한
+    default: op
+  tycoon.admin.market:
+    description: 시장 조작 알림 수신 권한
+    default: op
+  tycoon.admin.villagertrade:
+    description: 주민 거래 관리 명령어 권한
+    default: op
+  tycoon.admin.xray:
+    description: X-ray 탐지 시스템 관리 권한
+    default: op
+  tycoon.xray.bypass:
+    description: X-ray 탐지 우회 권한
+    default: op
+  tycoon.admin.pvpdamage:
+    description: PvP 데미지 배율 토글 권한
+    default: op
+  tycoon.admin.worldreset:
+    description: 월드 리셋 권한
+    default: op
+  tycoon.admin.worldtp:
+    description: 월드 텔레포트 권한
+    default: op
+  tycoon.admin.job:
+    description: 직업 관리 권한
+    default: op
+  tycoon.admin.codex:
+    description: 도감 관리 명령어 권한
+    default: op
+  tycoon.admin.enchant:
+    description: 인챈트 관리 명령어 권한
+    default: op
+  tycoon.admin.lamp:
+    description: 램프 관리 명령어 권한
+    default: op
+  tycoon.admin.upgrade:
+    description: 강화 관리 명령어 권한
+    default: op
+  tycoon.admin.coreitem:
+    description: 핵심 아이템 관리 명령어 권한
+    default: op
+  tycoon.admin.recovery:
+    description: /recovery 명령어 사용 권한 (관리자용, 다른 플레이어 보관소 열기 포함)
+    default: op
+  tycoon.admin.npc:
+    description: 승급 NPC 관리 명령어 권한
+    default: op
+  tycoon.admin.bcshop:
+    description: BC 상점 관리 명령어 권한
+    default: op
+  tycoon.tax.admin:
+    description: 토지세 관리 명령어 권한
+    default: op
+  tycoon.tax.use:
+    description: 세금 조회 명령어 사용 권한
+    default: true
+  tycoon.recovery.use:
+    description: NPC를 통한 보관소 접근 권한 (모든 플레이어 기본 허용)
+    default: true
+  tycoon.codex.use:
+    description: 도감 명령어 사용 권한
+    default: true
+  tycoon.achievement.use:
+    description: 업적 명령어 사용 권한
+    default: true
+  tycoon.title.use:
+    description: 칭호 명령어 사용 권한
+    default: true
+  tycoon.trade.use:
+    description: 거래 명령어 사용 권한
+    default: true
+  tycoon.player:
+    description: 일반 플레이어 권한
+    default: true
+    children:
+      tycoon.job.use: true
+      tycoon.codex.use: true
+      tycoon.achievement.use: true
+      tycoon.title.use: true
+      tycoon.trade.use: true
+  tycoon.job.use:
+    description: 직업 명령어 사용 권한
+    default: true

@@ -1,0 +1,841 @@
+# ============================================
+# BotTycoon - 직업 설정 파일 (jobs.yml)
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+# [2026-02-01] v2: 구리 산화 속도 상향 (5분/10%), 구리 가격 1.5배
+config-version: 2
+# 
+# 이 파일은 모든 직업 시스템의 설정을 관리합니다.
+# config.yml과 별도로 관리되어 직업 밸런싱이 용이합니다.
+#
+# 구조:
+# - global: 글로벌 설정
+# - pricing_policy: 가격 정책
+# - exp_formula: 경험치 공식
+# - common: 모든 직업 공통 설정
+# - jobs.*: 개별 직업 설정
+#
+# 변경 시 /tycoon reload 명령어로 적용
+# ============================================
+
+# ============================================
+# 글로벌 설정 (Phase 4.A)
+# ============================================
+global:
+  # Tier 2 직업 활성화 여부 (Lite: false)
+  tier2_jobs_enabled: false
+  
+  # 경험치 획득 경로 활성화
+  exp_from_actions: true    # 행동(채굴/수확/낚시)으로 경험치 획득
+  exp_from_sales: true      # 판매로 경험치 획득
+
+# ============================================
+# 가격 정책 (Phase 4.A)
+# ============================================
+pricing_policy:
+  # 직업이 없는 플레이어 판매 배율 (70% = 불이익)
+  no_job_sell_multiplier: 0.7
+  
+  # 직업이 없는 플레이어 구매 배율 (130% = 비싸게 구매)
+  no_job_buy_multiplier: 1.3
+  
+  # [제거됨] level_bonus_percent - 직업별 levelBonusPercent 사용
+
+# ============================================
+# 경험치 공식 (Phase 4.E 리워크)
+# ============================================
+# 공식: levelUpExp = base + (level² × multiplier)
+# 
+# Phase 4.E 변경: 초반 2배 느리게
+# - 레거시: base=50, mult=5.0 → Lv1→2: 55 XP
+# - 변경후: base=100, mult=10.0 → Lv1→2: 110 XP (약 2배)
+#
+exp_formula:
+  # 구간별 설정 (레벨 범위, base, multiplier)
+  segments:
+    # Lv 1~20: 초반 (레거시 대비 2배 느리게)
+    - min_level: 1
+      max_level: 20
+      base: 100
+      multiplier: 10.0
+    # Lv 21~40: 중반
+    - min_level: 21
+      max_level: 40
+      base: 200
+      multiplier: 25.0
+    # Lv 41~80: 후반
+    - min_level: 41
+      max_level: 80
+      base: 400
+      multiplier: 50.0
+    # Lv 81~100: 엔드게임
+    - min_level: 81
+      max_level: 100
+      base: 800
+      multiplier: 80.0
+
+# ============================================
+# 공통 설정 [참고용 - 코드에서 직접 읽지 않음]
+# 각 직업별 섹션에서 개별 정의됨
+# ============================================
+common:
+  # 최대 레벨 [참고용]
+  maxLevel:
+    tier1: 100    # Tier 1 직업 (광부, 농부, 어부)
+    tier2: 70     # Tier 2 직업 (장인, 셰프, 약초사)
+  
+  # 직업 해금 조건 [참고용]
+  # Phase 4.E: 25종/20,000 BD (레거시: 10종/500 BD)
+  defaultUnlock:
+    codex_count: 25
+    money: 20000
+
+# ============================================
+# 등급별 보너스 설정 (승급 효과)
+# ============================================
+# 
+# 각 직업의 등급(GRADE_2, GRADE_3, GRADE_4) 승급 시 적용되는 보너스
+# GRADE_1은 기본값 (보너스 없음)
+#
+# 공통 필드:
+# - yieldMulti: 채집량 배율 (1.0 = 기본, 1.05 = +5%)
+# - xpMulti: 경험치 배율 (행동 + 판매 XP)
+#
+# 직업별 필드:
+# - miner: miningEfficiency (채굴 효율 인챈트 레벨)
+# - farmer: seedMulti (씨앗 배율), primeChance, trophyChance
+# - fisher: lureBonus (Lure 레벨 추가), rareChance (희귀도 보너스)
+#
+gradeBonus:
+  # ===== 광부 등급 보너스 =====
+  miner:
+    GRADE_2:
+      yieldMulti: 1.03       # 추가 드롭 +3%
+      xpMulti: 1.05          # XP +5%
+      miningEfficiency: 1    # 채굴 효율 Lv.1
+    GRADE_3:
+      yieldMulti: 1.05       # 추가 드롭 +5%
+      xpMulti: 1.10          # XP +10%
+      miningEfficiency: 2    # 채굴 효율 Lv.2
+    GRADE_4:
+      yieldMulti: 1.08       # 추가 드롭 +8%
+      xpMulti: 1.15          # XP +15%
+      miningEfficiency: 3    # 채굴 효율 Lv.3
+  
+  # ===== 농부 등급 보너스 =====
+  farmer:
+    GRADE_2:
+      yieldMulti: 1.08       # 작물 수확량 +8%
+      seedMulti: 1.02        # 씨앗 +2%
+      xpMulti: 1.05          # XP +5%
+      primeChance: 0.02      # 프라임 확률 +2%
+      trophyChance: 0.0
+    GRADE_3:
+      yieldMulti: 1.15       # 작물 수확량 +15%
+      seedMulti: 1.05        # 씨앗 +5%
+      xpMulti: 1.10          # XP +10%
+      primeChance: 0.05      # 프라임 확률 +5%
+      trophyChance: 0.01     # 트로피 확률 +1%
+    GRADE_4:
+      yieldMulti: 1.25       # 작물 수확량 +25%
+      seedMulti: 1.08        # 씨앗 +8%
+      xpMulti: 1.15          # XP +15%
+      primeChance: 0.10      # 프라임 확률 +10%
+      trophyChance: 0.03     # 트로피 확률 +3%
+  
+  # ===== 어부 등급 보너스 =====
+  fisher:
+    GRADE_2:
+      yieldMulti: 1.0        # 어부는 Lure로 시간 단축
+      xpMulti: 1.05          # XP +5%
+      lureBonus: 1           # Lure +1
+      rareChance: 0.03       # 희귀+ 확률 +3%
+    GRADE_3:
+      yieldMulti: 1.0
+      xpMulti: 1.10          # XP +10%
+      lureBonus: 2           # Lure +2
+      rareChance: 0.06       # 희귀+ 확률 +6%
+    GRADE_4:
+      yieldMulti: 1.0
+      xpMulti: 1.15          # XP +15%
+      lureBonus: 3           # Lure +3
+      rareChance: 0.10       # 희귀+ 확률 +10%
+
+# ============================================
+# Tier 1 직업: 광부 (Miner)
+# ============================================
+miner:
+  displayName: "광부"
+  description: "광석을 채굴합니다."
+  maxLevel: 100
+  levelBonusPercent: 2.8    # 복리 2.8% (레벨100 ≈ 15.5배)
+  # 공식: ActualPrice = BasePrice × (1 + levelBonusPercent/100 × level)
+  
+  # Phase 4.E: 해금 조건 상향 (레거시: 10종/500 BD)
+  unlock:
+    codex_count: 25
+    money: 20000
+  
+  # ===== 등급별 승급 조건 =====
+  # [2026-02-01] 밸런스 조정 - 농부/어부와 동일하게 상향
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+    GRADE_2:
+      requiredLevel: 20
+      requiredMoney: 50000
+      requiredTotalSales: 100000
+      # [커스텀 모드용] 커스텀 광물 요구사항 (Lite에서 무시됨)
+      requiredMined:
+        pig_iron: 500
+        copper_ore: 300
+      requiredSold:
+        pig_iron: 400
+        copper_block: 100
+    GRADE_3:
+      requiredLevel: 40
+      requiredMoney: 200000
+      requiredTotalSales: 500000
+      requiredMined:
+        steel: 300
+        crude_oil: 100
+      requiredSold:
+        steel: 200
+        copper_oxidized: 150
+    GRADE_4:
+      requiredLevel: 80
+      requiredMoney: 1000000
+      requiredTotalSales: 2000000
+      requiredMined:
+        pure_iron: 200
+        refined_oil: 150
+      requiredSold:
+        pure_iron: 150
+        alloy_steel: 50
+  
+  # ===== XP 보상 =====
+  # [2026-01-31 밸런스 패치] 고급 광석 XP 하향
+  expRewards:
+    # 바닐라 광석 (Material 이름)
+    COAL_ORE: 3
+    DEEPSLATE_COAL_ORE: 4
+    COPPER_ORE: 5
+    DEEPSLATE_COPPER_ORE: 6
+    IRON_ORE: 7
+    DEEPSLATE_IRON_ORE: 8
+    GOLD_ORE: 10              # 12 → 10 (-17%)
+    DEEPSLATE_GOLD_ORE: 12    # 14 → 12 (-14%)
+    NETHER_GOLD_ORE: 8        # 10 → 8 (-20%)
+    REDSTONE_ORE: 8
+    DEEPSLATE_REDSTONE_ORE: 10
+    LAPIS_ORE: 12             # 14 → 12 (-14%)
+    DEEPSLATE_LAPIS_ORE: 14   # 16 → 14 (-12%)
+    DIAMOND_ORE: 22           # 30 → 22 (-27%)
+    DEEPSLATE_DIAMOND_ORE: 26 # 35 → 26 (-26%)
+    EMERALD_ORE: 28           # 40 → 28 (-30%)
+    DEEPSLATE_EMERALD_ORE: 34 # 48 → 34 (-29%)
+    NETHER_QUARTZ_ORE: 7
+    ANCIENT_DEBRIS: 55        # 80 → 55 (-31%)
+    # [커스텀 모드용] 커스텀 광물 (소문자 ID)
+    # Lite에서는 Material.valueOf() 실패로 무시됨
+    pig_iron: 5
+    steel: 8
+    pure_iron: 12
+    wrought_iron: 12
+    alloy_steel: 18
+    crude_oil: 6
+    refined_oil: 10
+  
+  # ===== 산화 구리 시스템 (Phase 4.B) =====
+  # [2026-02-01] 산화 속도 상향: 20분/5.69% → 5분/10%
+  oxidation:
+    enabled: true
+    check_interval_minutes: 5     # 체크 주기 (분) - 20 → 5
+    oxidation_chance: 0.10        # 산화 확률 - 5.69% → 10%
+    farm_prevention_radius: 4     # 팜 억제 반경 (블록)
+  
+  # ===== 정제소 시스템 (stub) =====
+  refinery:
+    enabled: false                # Lite에서 비활성화
+  
+  # ===== 기준 가격 (BD) =====
+  basePrices:
+    # 바닐라 광물 (제련품)
+    COAL: 5
+    # [2026-02-01] 구리 판매가 1.5배 상향
+    RAW_COPPER: 12              # 8 → 12
+    COPPER_INGOT: 21            # 14 → 21
+    RAW_IRON: 12
+    IRON_INGOT: 20
+    RAW_GOLD: 35
+    GOLD_INGOT: 50
+    REDSTONE: 6
+    LAPIS_LAZULI: 10
+    DIAMOND: 150
+    EMERALD: 200
+    QUARTZ: 8
+    NETHERITE_SCRAP: 500
+    # [커스텀 모드용] 커스텀 광물 (철 계열)
+    # Lite에서는 Material.valueOf() 실패로 무시됨
+    pig_iron: 140           # 120~170 허용
+    steel: 270              # 210~340 허용
+    pure_iron: 450
+    wrought_iron: 430
+    alloy_steel: 800
+    # [커스텀 모드용] 커스텀 광물 (구리 계열)
+    copper_block: 130       # 110~150 허용
+    copper_exposed: 260     # 130 × 2
+    copper_oxidized: 520    # 130 × 4
+    # [커스텀 모드용] 원유/석유
+    crude_oil: 80
+    refined_oil: 200
+    # [커스텀 모드용] 기타 광물
+    lithium_ore: 180
+    aluminum_ore: 150
+    nickel_ore: 200
+    titanium_ore: 600
+    silver_ore: 480
+    tin_ore: 120
+    zinc_ore: 110
+    sulfur_ore: 90
+    rare_earth_silica: 700
+
+# ============================================
+# Tier 1 직업: 농부 (Farmer)
+# ============================================
+farmer:
+  displayName: "농부"
+  description: "작물을 재배하고 판매합니다. 저위험·고안정 직업."
+  maxLevel: 100
+  levelBonusPercent: 3.0    # 복리 3.0% (레벨100 ≈ 19.2배)
+  
+  # Phase 4.E: 해금 조건 상향 (레거시: 10종/500 BD)
+  unlock:
+    codex_count: 25
+    money: 20000
+  
+  # 청크당 농지 상한 (LOCKED)
+  maxFarmlandPerChunk: 196
+  
+  # 등급 드랍 확률 (Normal/Prime/Trophy)
+  gradeDropChance:
+    normal: 70.0    # 70%
+    prime: 25.0     # 25%
+    trophy: 5.0     # 5%
+  
+  # ===== 등급별 승급 조건 =====
+  # LOCKED: T2=Lv25, T3=Lv50, T4=Lv90
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+      requiredTotalSales: 0
+    GRADE_2:
+      requiredLevel: 25
+      requiredMoney: 50000
+      requiredTotalSales: 100000    # 바닐라 플러스 모드용
+    GRADE_3:
+      requiredLevel: 50
+      requiredMoney: 200000
+      requiredTotalSales: 500000
+    GRADE_4:
+      requiredLevel: 90
+      requiredMoney: 1000000
+      requiredTotalSales: 2000000
+  
+  # [커스텀 작물 모드용 - 현재 미사용]
+  # 그룹별 누적 판매액 승급 조건 (LOCKED)
+  # groupRequirements:
+  #   GRADE_2:    # T1 → T2
+  #     A: 300000     # Group A ≥ 300k BD
+  #     B: 150000     # Group B ≥ 150k BD
+  #   GRADE_3:    # T2 → T3
+  #     A: 600000
+  #     B: 300000
+  #     C: 300000
+  #     D: 200000
+  #   GRADE_4:    # T3 → T4
+  #     A: 1000000
+  #     B: 600000
+  #     C: 600000
+  #     D: 500000
+  #     E: 400000
+  
+  # ===== 바닐라 작물 기준 가격 (BD) =====
+  basePrices:
+    WHEAT: 3
+    BEETROOT: 4
+    CARROT: 5
+    POTATO: 5
+    MELON_SLICE: 2
+    PUMPKIN: 15
+    BROWN_MUSHROOM: 6
+    RED_MUSHROOM: 6
+    COCOA_BEANS: 8
+    SUGAR_CANE: 3
+    NETHER_WART: 12
+    SWEET_BERRIES: 4
+    GLOW_BERRIES: 8
+    CHORUS_FRUIT: 20
+  
+  # ===== 바닐라 작물 XP 보상 =====
+  # [2026-01-31 밸런스 패치] 고급 작물 XP 상향
+  expRewards:
+    WHEAT: 5
+    BEETROOT: 4
+    CARROT: 5
+    POTATO: 5
+    MELON_SLICE: 3
+    PUMPKIN: 14               # 10 → 14 (+40%)
+    BROWN_MUSHROOM: 3
+    RED_MUSHROOM: 3
+    COCOA_BEANS: 6            # 4 → 6 (+50%)
+    SUGAR_CANE: 2
+    NETHER_WART: 12           # 8 → 12 (+50%)
+    SWEET_BERRIES: 3
+    GLOW_BERRIES: 7           # 5 → 7 (+40%)
+    CHORUS_FRUIT: 18          # 12 → 18 (+50%)
+
+# ============================================
+# Tier 1 직업: 어부 (Fisher)
+# ============================================
+fisher:
+  displayName: "어부"
+  description: "수산물을 낚아 판매합니다. 확률·환경 의존형 직업."
+  maxLevel: 100
+  levelBonusPercent: 3.2    # 복리 3.2% (레벨100 ≈ 23.6배)
+  
+  # Phase 4.E: 해금 조건 상향 (레거시: 10종/500 BD)
+  unlock:
+    codex_count: 25
+    money: 20000
+  
+  # 캐스트/시간 설정 (LOCKED)
+  townCastsPerHour: 150
+  wildCastsPerHour: 140
+  
+  # ===== 등급별 승급 조건 =====
+  # LOCKED: T2=Lv15, T3=Lv35, T4=Lv70
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+      requiredTotalSoldAmount: 0
+    GRADE_2:
+      requiredLevel: 15
+      requiredMoney: 50000
+      requiredTotalSoldAmount: 100000
+    GRADE_3:
+      requiredLevel: 35
+      requiredMoney: 200000
+      requiredTotalSoldAmount: 500000
+    GRADE_4:
+      requiredLevel: 70
+      requiredMoney: 1000000
+      requiredTotalSoldAmount: 2000000
+  
+  # Town 희귀도 분포 (LOCKED)
+  # [STUB - 등급별 분포 시스템 미구현]
+  # 현재 FisherConfig에서 기본값 사용 중
+  townDistribution:
+    GRADE_1:
+      common: 40
+      uncommon: 35
+      rare: 20
+      epic: 4
+      legendary: 1
+    GRADE_2:
+      common: 30
+      uncommon: 32
+      rare: 30
+      epic: 7
+      legendary: 1
+    GRADE_3:
+      common: 18
+      uncommon: 27
+      rare: 35
+      epic: 16
+      legendary: 4
+    GRADE_4:
+      common: 8
+      uncommon: 17
+      rare: 35
+      epic: 28
+      legendary: 12
+  
+  # Wild 희귀도 분포 (LOCKED)
+  # [STUB - 등급별 분포 시스템 미구현]
+  # 현재 FisherConfig에서 기본값 사용 중
+  wildDistribution:
+    GRADE_1:
+      common: 35
+      uncommon: 32
+      rare: 25
+      epic: 6
+      legendary: 2
+    GRADE_2:
+      common: 22
+      uncommon: 30
+      rare: 35
+      epic: 11
+      legendary: 2
+    GRADE_3:
+      common: 10
+      uncommon: 22
+      rare: 40
+      epic: 22
+      legendary: 6
+    GRADE_4:
+      common: 4
+      uncommon: 12
+      rare: 38
+      epic: 32
+      legendary: 14
+  
+  # Pity(천장) 설정 (LOCKED)
+  # [STUB - 등급별 Pity 시스템 미구현]
+  # 현재 FisherConfig에서 기본값 사용 중
+  pity:
+    GRADE_1:
+      rare: 40
+      epic: 120
+      legendary: 300
+    GRADE_2:
+      rare: 30
+      epic: 90
+      legendary: 220
+    GRADE_3:
+      rare: 25
+      epic: 70
+      legendary: 180
+    GRADE_4:
+      rare: 20
+      epic: 55
+      legendary: 140
+  
+  # ===== 바닐라 수산물 기준 가격 (BD) =====
+  basePrices:
+    COD: 10
+    SALMON: 15
+    TROPICAL_FISH: 30
+    PUFFERFISH: 25
+    # 낚시 잡동사니
+    LILY_PAD: 3
+    BOWL: 1
+    LEATHER: 5
+    LEATHER_BOOTS: 8
+    ROTTEN_FLESH: 2
+    STICK: 1
+    STRING: 3
+    BONE: 4
+    INK_SAC: 6
+    TRIPWIRE_HOOK: 10
+    # 낚시 보물
+    BOW: 50
+    ENCHANTED_BOOK: 100
+    FISHING_ROD: 30
+    NAME_TAG: 80
+    NAUTILUS_SHELL: 150
+    SADDLE: 100
+  
+  # ===== 바닐라 수산물 XP 보상 =====
+  # [2026-01-31 밸런스 패치] 전체 3배 상향 (어부 밸런스 개선)
+  expRewards:
+    COD: 15              # 5 → 15 (×3)
+    SALMON: 18           # 6 → 18 (×3)
+    TROPICAL_FISH: 30    # 10 → 30 (×3)
+    PUFFERFISH: 24       # 8 → 24 (×3)
+    LILY_PAD: 6          # 2 → 6 (×3)
+    BOWL: 3              # 1 → 3 (×3)
+    LEATHER: 6           # 2 → 6 (×3)
+    LEATHER_BOOTS: 9     # 3 → 9 (×3)
+    ROTTEN_FLESH: 3      # 1 → 3 (×3)
+    STICK: 3             # 1 → 3 (×3)
+    STRING: 6            # 2 → 6 (×3)
+    BONE: 6              # 2 → 6 (×3)
+    INK_SAC: 9           # 3 → 9 (×3)
+    TRIPWIRE_HOOK: 15    # 5 → 15 (×3)
+    BOW: 45              # 15 → 45 (×3)
+    ENCHANTED_BOOK: 75   # 25 → 75 (×3)
+    FISHING_ROD: 36      # 12 → 36 (×3)
+    NAME_TAG: 60         # 20 → 60 (×3)
+    NAUTILUS_SHELL: 60   # 20 → 60 (×3)
+    SADDLE: 45           # 15 → 45 (×3)
+
+# ============================================
+# Tier 2 직업: 장인 (Artisan)
+# [STUB - Tier 2 직업 미구현]
+# global.tier2_jobs_enabled: false 상태
+# 향후 구현 예정, 현재 코드에서 사용하지 않음
+# ============================================
+artisan:
+  displayName: "장인"
+  description: "열쇠와 귀중품을 제작하고 장비를 수리합니다."
+  maxLevel: 70
+  levelBonusPercent: 7.0
+  
+  unlock:
+    codexCount: 50
+    money: 5000
+    requiredTier1Jobs:
+      - miner
+  
+  # ===== 등급별 승급 조건 =====
+  # T1=Lv1, T2=Lv25, T3=Lv55
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+      requiredCrafted: 0
+      requiredRepairs: 0
+    GRADE_2:
+      requiredLevel: 25
+      requiredMoney: 50000
+      requiredCrafted: 50
+      requiredRepairs: 30
+      requiredTotalSales: 100000
+    GRADE_3:
+      requiredLevel: 55
+      requiredMoney: 200000
+      requiredCrafted: 200
+      requiredRepairs: 100
+      requiredTotalSales: 500000
+      requiredRepairIncome: 100000
+  
+  # XP 보상
+  expRewards:
+    craft_key_c: 15
+    craft_key_b: 30
+    craft_key_a: 60
+    craft_key_s: 120
+    craft_valuable_c: 20
+    craft_valuable_b: 50
+    craft_valuable_a: 100
+    craft_valuable_s: 200
+    sell_valuable_c: 10
+    sell_valuable_b: 25
+    sell_valuable_a: 50
+    sell_valuable_s: 100
+    repair_base: 10
+    repair_per_100bd: 5
+  
+  # 장인의 제작대 설정
+  workbench:
+    npcPurchasePrice: 10000
+    maxPerPlayer: 3
+    repairRateMin: 80
+    repairRateMax: 120
+    retrievalTimeoutMinutes: 30
+
+# ============================================
+# Tier 2 직업: 셰프 (Chef)
+# [STUB - Tier 2 직업 미구현]
+# global.tier2_jobs_enabled: false 상태
+# 향후 구현 예정, 현재 코드에서 사용하지 않음
+# ============================================
+chef:
+  displayName: "셰프"
+  description: "요리를 만들어 버프 음식을 판매합니다."
+  maxLevel: 70
+  levelBonusPercent: 7.0
+  
+  unlock:
+    codexCount: 50
+    money: 5000
+    requiredTier1Jobs:
+      - farmer
+  
+  # ===== 등급별 승급 조건 =====
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+      requiredCrafted: 0
+    GRADE_2:
+      requiredLevel: 25
+      requiredMoney: 50000
+      requiredCrafted: 50
+      requiredTotalSales: 100000
+    GRADE_3:
+      requiredLevel: 55
+      requiredMoney: 200000
+      requiredCrafted: 200
+      requiredTotalSales: 500000
+  
+  # XP 보상
+  expRewards:
+    craft_c: 10
+    craft_b: 25
+    craft_a: 50
+    craft_s: 100
+    sell_c: 5
+    sell_b: 15
+    sell_a: 30
+    sell_s: 60
+  
+  # NPC 수수료 (%)
+  npcFeePercent:
+    C: 10
+    B: 15
+    A: 20
+    S: 25
+  
+  # 요리사의 주방 설정
+  kitchen:
+    npcPurchasePrice: 10000
+    maxPerGrade:
+      T1: 3
+      T2: 5
+      T3: 7
+    recipeDifficulty:
+      C: { steps: 3, timeWindow: 5.0 }
+      B: { steps: 5, timeWindow: 4.0 }
+      A: { steps: 8, timeWindow: 3.0 }
+      S: { steps: 12, timeWindow: 2.0 }
+
+# ============================================
+# Tier 2 직업: 약초사 (Herbalist)
+# [STUB - Tier 2 직업 미구현]
+# global.tier2_jobs_enabled: false 상태
+# 향후 구현 예정, 현재 코드에서 사용하지 않음
+# ============================================
+herbalist:
+  displayName: "약초사"
+  description: "포션을 양조하고 약초를 채집합니다."
+  maxLevel: 70
+  levelBonusPercent: 7.0
+  
+  unlock:
+    codexCount: 50
+    money: 5000
+    requiredTier1Jobs:
+      - farmer
+  
+  # ===== 등급별 승급 조건 =====
+  grades:
+    GRADE_1:
+      requiredLevel: 1
+      requiredMoney: 0
+      requiredBrewed: 0
+      requiredGathered: 0
+    GRADE_2:
+      requiredLevel: 25
+      requiredMoney: 50000
+      requiredBrewed: 30
+      requiredGathered: 100
+      requiredTotalSales: 80000
+    GRADE_3:
+      requiredLevel: 55
+      requiredMoney: 200000
+      requiredBrewed: 150
+      requiredGathered: 500
+      requiredTotalSales: 400000
+  
+  # XP 보상
+  expRewards:
+    brew_c: 10
+    brew_b: 25
+    brew_a: 50
+    brew_s: 100
+    sell_c: 5
+    sell_b: 12
+    sell_a: 25
+    sell_s: 50
+    gather_c: 5
+    gather_b: 12
+    gather_a: 25
+    gather_s: 50
+  
+  # NPC 수수료 (%) - Chef보다 낮음
+  npcFeePercent:
+    C: 5
+    B: 10
+    A: 15
+    S: 20
+  
+  # 약초사의 양조대 설정
+  cauldron:
+    npcPurchasePrice: 8000
+  
+  # 약초 스폰 설정
+  herbSpawn:
+    baseChance: 0.02
+    playerRadius: 48
+    respawnTicks: 36000
+
+# ============================================
+# 직업 업그레이드 시스템
+# [STUB - 업그레이드 시스템 미구현]
+# 향후 구현 예정, 현재 코드에서 사용하지 않음
+# ============================================
+upgrades:
+  maxLevel: 5
+  
+  # 레벨별 가격 (BD + BottCoin)
+  prices:
+    1: { bd: 50000, bottcoin: 0 }
+    2: { bd: 120000, bottcoin: 0 }
+    3: { bd: 250000, bottcoin: 10 }
+    4: { bd: 400000, bottcoin: 15 }
+    5: { bd: 600000, bottcoin: 25 }
+  
+  # 공통 업그레이드 (모든 직업)
+  common:
+    sell_cap_increase:
+      displayName: "판매 한도 증가"
+      description: "시간당 판매 한도 +10개/레벨"
+      effectPerLevel: 10
+    level_bonus_boost:
+      displayName: "레벨 보너스 증폭"
+      description: "레벨당 가격 보너스 +0.5%/레벨"
+      effectPerLevel: 0.005
+    exp_boost:
+      displayName: "경험치 부스트"
+      description: "획득 XP +5%/레벨"
+      effectPerLevel: 0.05
+  
+  # 광부 전용 업그레이드
+  miner:
+    refine_efficiency:
+      displayName: "제련 효율"
+      description: "제련 비용 -5%/레벨"
+      effectPerLevel: 0.05
+    bonus_output:
+      displayName: "행운의 광부"
+      description: "추가 생산 확률 +2%/레벨"
+      effectPerLevel: 0.02
+    ore_detection:
+      displayName: "광맥 감지"
+      description: "광맥 하이라이트 범위 +2블록/레벨 (모드 연동)"
+      effectPerLevel: 2
+  
+  # 농부 전용 업그레이드
+  farmer:
+    harvest_bonus:
+      displayName: "풍요의 손길"
+      description: "수확량 +5%/레벨"
+      effectPerLevel: 0.05
+    growth_speed:
+      displayName: "성장 촉진"
+      description: "작물 성장 속도 +3%/레벨"
+      effectPerLevel: 0.03
+    prime_chance:
+      displayName: "프라임 확률"
+      description: "Prime/Trophy 등급 확률 +1%/레벨"
+      effectPerLevel: 0.01
+  
+  # 어부 전용 업그레이드
+  fisher:
+    pity_reduction:
+      displayName: "천장 감소"
+      description: "Pity 카운터 -5%/레벨"
+      effectPerLevel: 0.05
+    rare_chance:
+      displayName: "대어 확률"
+      description: "Epic/Legendary 확률 +0.5%/레벨"
+      effectPerLevel: 0.005
+    cast_speed:
+      displayName: "낚시 속도"
+      description: "캐스트 대기 시간 -3%/레벨"
+      effectPerLevel: 0.03

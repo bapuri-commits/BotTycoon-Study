@@ -1,0 +1,110 @@
+# ============================================
+# Tycoon Lite - 치장 아이템 (Cosmetics)
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 1
+# 
+# BC(BottCoin)로 구매할 수 있는 치장 아이템입니다.
+# 효과 중첩 가능: 채팅색상 1개 + 파티클 1개 + 발광 1개
+#
+# 타입별 구조:
+#   chat_colors: 채팅 본문 색상 변경
+#   particles: 머리 위 파티클 효과
+#   glows: 발광 효과
+
+# ============================================
+# 채팅 색상 (본문에만 적용)
+# ============================================
+chat_colors:
+  chat_red:
+    name: "빨강 채팅"
+    color_code: "§c"
+    price: 200
+    icon: RED_DYE
+    
+  chat_gold:
+    name: "금색 채팅"
+    color_code: "§6"
+    price: 300
+    icon: GOLD_INGOT
+    
+  chat_aqua:
+    name: "아쿠아 채팅"
+    color_code: "§b"
+    price: 300
+    icon: LIGHT_BLUE_DYE
+    
+  chat_green:
+    name: "초록 채팅"
+    color_code: "§a"
+    price: 250
+    icon: LIME_DYE
+    
+  chat_pink:
+    name: "핑크 채팅"
+    color_code: "§d"
+    price: 350
+    icon: PINK_DYE
+    
+  chat_rainbow:
+    name: "무지개 채팅"
+    color_code: "RAINBOW"
+    price: 1000
+    icon: NETHER_STAR
+
+# ============================================
+# 파티클 (머리 위에 표시)
+# ============================================
+# 사용 가능한 파티클 타입:
+# HEART, FLAME, VILLAGER_HAPPY, NOTE, CRIT, ENCHANTMENT_TABLE
+# 참고: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
+
+particles:
+  heart:
+    name: "하트 파티클"
+    particle_type: HEART
+    price: 1000
+    icon: RED_DYE
+    
+  flame:
+    name: "불꽃 파티클"
+    particle_type: FLAME
+    price: 1200
+    icon: BLAZE_POWDER
+    
+  happy:
+    name: "행복 파티클"
+    particle_type: VILLAGER_HAPPY
+    price: 800
+    icon: EMERALD
+    
+  note:
+    name: "음표 파티클"
+    particle_type: NOTE
+    price: 900
+    icon: NOTE_BLOCK
+    
+  enchant:
+    name: "마법 파티클"
+    particle_type: ENCHANTMENT_TABLE
+    price: 1500
+    icon: ENCHANTING_TABLE
+
+# ============================================
+# 발광 효과 (Glowing 포션 효과)
+# ============================================
+# 참고: 마인크래프트의 Glowing 효과는 단색입니다.
+# 팀 색상을 통해 색상 변경이 가능하지만 현재는 기본 색상만 지원합니다.
+
+glows:
+  glow_white:
+    name: "흰색 발광"
+    glow_color: WHITE
+    price: 800
+    icon: GLOWSTONE_DUST
+    
+  glow_gold:
+    name: "금색 발광"
+    glow_color: GOLD
+    price: 1000
+    icon: GOLD_NUGGET

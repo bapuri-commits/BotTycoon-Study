@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ============================================ -->
+    <!-- 프로젝트 기본 정보                           -->
+    <!-- ============================================ -->
+    <groupId>kr.bapuri</groupId>
+    <artifactId>tycoon-lite</artifactId>
+    
+    <!-- 
+        🔧 버전 관리:
+        - 여기서 버전을 바꾸면 JAR 파일 이름과 plugin.yml에 자동 반영
+        - 형식: major.minor.patch(-SNAPSHOT)
+        - 예: 1.0.0, 1.0.1-SNAPSHOT, 1.1.0
+    -->
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Tycoon Lite</name>
+    <description>Tycoon Lite - VanillaPlus Minecraft Economy Plugin</description>
+
+    <!-- ============================================ -->
+    <!-- 프로젝트 속성                                 -->
+    <!-- ============================================ -->
+    <properties>
+        <!-- Java 버전 -->
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Minecraft/Paper 버전 -->
+        <paper.version>1.20.1-R0.1-SNAPSHOT</paper.version>
+        
+        <!-- 외부 플러그인 API 버전 (VPS와 동일하게 맞춤) -->
+        <vault.version>1.7.1</vault.version>
+        <citizens.version>2.0.32-SNAPSHOT</citizens.version>
+        <worldguard.version>7.0.9</worldguard.version>
+        <worldedit.version>7.2.17</worldedit.version>
+        <placeholderapi.version>2.11.7</placeholderapi.version>
+        <coreprotect.version>22.2</coreprotect.version>
+        <luckperms.version>5.4</luckperms.version>
+    </properties>
+
+    <!-- ============================================ -->
+    <!-- 의존성                                        -->
+    <!-- ============================================ -->
+    <dependencies>
+        <!-- Paper API -->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Vault API (경제 연동) - depend -->
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>${vault.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- LuckPerms API (권한 시스템) - depend -->
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>${luckperms.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Citizens API (NPC 연동) - depend -->
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizens-main</artifactId>
+            <version>${citizens.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- WorldGuard API (리전 보호) - depend -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>${worldguard.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- WorldEdit API (WorldGuard 의존성) - softdepend -->
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>${worldedit.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- PlaceholderAPI (플레이스홀더 연동) - softdepend -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>${placeholderapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- CoreProtect API (블록 로깅) - softdepend -->
+        <dependency>
+            <groupId>net.coreprotect</groupId>
+            <artifactId>coreprotect</artifactId>
+            <version>${coreprotect.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Lands API (땅 관리) - softdepend -->
+        <dependency>
+            <groupId>com.github.angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>7.1.12</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- AngelChest: 리플렉션 기반 연동 (API 없이) -->
+    </dependencies>
+
+    <!-- ============================================ -->
+    <!-- 저장소                                        -->
+    <!-- ============================================ -->
+    <repositories>
+        <!-- Paper MC -->
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        
+        <!-- JitPack (Vault) -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        
+        <!-- PlaceholderAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        
+        <!-- Citizens -->
+        <repository>
+            <id>citizens-repo</id>
+            <url>https://maven.citizensnpcs.co/repo</url>
+        </repository>
+        
+        <!-- EngineHub (WorldGuard, WorldEdit) -->
+        <repository>
+            <id>enginehub</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        
+        <!-- CoreProtect -->
+        <repository>
+            <id>coreprotect</id>
+            <url>https://maven.playpro.com</url>
+        </repository>
+    </repositories>
+
+    <!-- ============================================ -->
+    <!-- 빌드 설정                                     -->
+    <!-- ============================================ -->
+    <build>
+        <!-- 
+            🔧 JAR 파일 이름 설정
+            결과: TycoonLite-1.0.0-SNAPSHOT.jar
+            버전 없이 하려면: <finalName>TycoonLite</finalName>
+        -->
+        <finalName>TycoonLite-${project.version}</finalName>
+        
+        <!-- plugin.yml에서 ${project.version} 등 변수 치환 활성화 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            
+            <!-- Maven JAR Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Build-Time>${maven.build.timestamp}</Build-Time>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            
+            <!-- 
+                Maven Shade Plugin (선택적)
+                - 의존성을 JAR에 포함시키려면 주석 해제
+                - 현재는 필요 없음 (외부 플러그인 API만 사용)
+            -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <!-- ============================================ -->
+    <!-- 프로필 (선택적)                               -->
+    <!-- ============================================ -->
+    <profiles>
+        <!-- 
+            릴리즈 빌드: mvn package -Prelease
+            - SNAPSHOT 접미사 제거
+            - 최적화 옵션 적용
+        -->
+        <profile>
+            <id>release</id>
+            <properties>
+                <!-- 릴리즈 시 디버그 정보 최소화 -->
+            </properties>
+        </profile>
+        
+        <!--
+            개발 빌드: mvn package -Pdev
+            - 자동으로 테스트 서버 plugins 폴더로 복사 (경로 수정 필요)
+        -->
+        <profile>
+            <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <!-- 테스트 서버 경로로 수정하세요 -->
+                                        <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                              todir="G:/mc-tycoon-server/plugins"
+                                              overwrite="true"/>
+                                        <echo>JAR copied to test server plugins folder</echo>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

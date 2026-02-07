@@ -1,0 +1,1143 @@
+# ============================================
+# Tycoon Plugin Configuration
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 2
+
+# ============================================
+# 시스템 활성화 설정 (기능 비활성화용)
+# [미사용 - 향후 마스터 스위치] jobs/dungeon/chest/refinery는 현재 코드에서 미사용
+# ============================================
+systems:
+  # 직업 시스템 (Miner, Fisher, Farmer, Artisan, Chef, Herbalist)
+  # Tier 1 (Miner, Fisher, Farmer)만 활성화 - Tier 2는 구현 미완료
+  jobs:
+    enabled: true    # [미사용] 향후 마스터 스위치로 활용 예정
+  
+  # 던전 시스템
+  dungeon:
+    enabled: false   # [미사용] 향후 마스터 스위치로 활용 예정
+  
+  # 보물상자/밀수품 시스템
+  chest:
+    enabled: false   # [미사용] 향후 마스터 스위치로 활용 예정
+  
+  # 제련 시스템
+  refinery:
+    enabled: false   # [미사용] 향후 마스터 스위치로 활용 예정
+  
+  # 칭호 시스템 (LuckPermsTitleService에서 사용)
+  titles:
+    enabled: true
+
+# ============================================
+# [Block Processing] 블록 처리 파이프라인 설정
+# VEIN_MINER, MULTI_MINE, TREE_FELLER 등 블록 파괴 시
+# Fortune, 등급 보너스, 램프 효과, 직업 XP를 통합 처리
+# ============================================
+processing:
+  # 새 처리 시스템 활성화 (false: 기존 방식 유지 - 롤백용)
+  use-new-processing: true
+  # 디버그 로깅 (콘솔에 처리 과정 출력)
+  debug: false
+
+# ============================================
+# [Phase 2] 플레이어 데이터 저장/백업 설정
+# ============================================
+playerdata:
+  # 자동 저장 설정 (메모리 → 파일 저장)
+  auto-save:
+    enabled: true                        # 자동 저장 활성화
+    interval-minutes: 5                  # 저장 주기 (분)
+  
+  # 스냅샷 백업 설정 (전체 플레이어 데이터: 직업, 레벨, 돈, 업적 등)
+  # BackupManager에서 사용 - 저장 경로: plugins/Tycoon/backups/playerdata/{uuid}/{timestamp}.yml
+  backup:
+    enabled: true                        # 스냅샷 백업 활성화
+    interval-minutes: 30                 # 스냅샷 주기 (분)
+    max-snapshots: 10                    # 플레이어당 최대 스냅샷 수
+    backup-on-quit: true                 # 퇴장 시 백업 생성
+
+# ============================================
+# 월드 설정 (5개 월드)
+# ============================================
+worlds:
+  # 타운 월드 - 메인 허브
+  # TODO: 외주 완료 후 spawnLocation 실제 좌표로 교체
+  town:
+    name: "world"                    # Bukkit 월드 이름
+    pvp: false                       # PvP 비활성화 (안전 구역)
+    keepInventory: false             # 기본 사망 규칙
+    difficulty: PEACEFUL             # 항상 PEACEFUL로 강제됨
+    spawnLocation: "1.5,1,15.5,0,0"  # 중앙 광장 (2026-01-25 설정)
+    # Town 전용 설정
+    portalIsolation: true            # 네더/엔드 포탈 분리 (타운 전용 차원)
+    # [Lands 플러그인에서 관리] plotPrice: 100000
+    # [Lands 플러그인에서 관리] interactionWhitelist - 영역별 상호작용 허용
+  
+  # 야생 월드 - 자원 파밍
+  wild:
+    name: "world_wild"
+    pvp: true                        # PvP 활성화 (10% 데미지)
+    keepInventory: false             # 사망 시 아이템 드랍 (데스 체스트)
+    difficulty: HARD
+    # [중복 - wildReset 섹션 사용] resetDays: 7
+    # [중복 - villagerTrade 섹션 사용] villagerTrading: false
+    # [미구현] redstone: true
+    # Wild 전용 설정
+    pvpDamageMultiplier: 0.1         # PvP 데미지 10%로 감소
+    # [AngelChest 플러그인에서 관리] deathChestDurationSeconds: 600
+    # [WorldGuard 플러그인에서 관리] safeZone - 안전 구역 설정
+    # 연결된 네더/엔드 월드 (자동 로드됨)
+    nether: "world_wild_nether"      # 야생 네더 월드 이름
+    the_end: "world_wild_the_end"    # 야생 엔드 월드 이름
+  
+  # [LITE] 비활성화된 월드: hunter, duel, dungeon, lobby, casino는 제거됨
+
+# ============================================
+# NPC 텔레포트 설정 (월드 간 이동)
+# ============================================
+npcTeleport:
+  enabled: true
+  
+  # Citizens NPC 이름 -> 포인트 ID 매핑
+  # NPC 이름에 컬러코드 포함 가능 (자동 제거 후 매칭)
+  npcMappings:
+    # 로비/마을 이동
+    "마을 안내원": "lobby_to_town"
+    "로비 안내원": "lobby_to_town"
+    # 야생 이동 (Town → Wild)
+    "야생 안내원": "town_to_wild"
+    # 
+    # [REMOVED] 귀환 NPC는 WildSpawnManager가 동적으로 처리함
+    # "귀환 안내원", "§e[귀환] §f마을로 돌아가기" 등은 
+    # registerWildReturnNpcHandler()에서 등록되므로 여기서 제거
+    #
+  
+  # 텔레포트 포인트 정의
+  # type: TELEPORT (기본), GUI_DUNGEON, GUI_DUEL
+  #
+  # [미구현 기능] sourceWorld, sourceLocation, sourceRadius
+  # 원래 의도: NPC 클릭 시 플레이어가 특정 구역 내에 있어야만 텔레포트 허용
+  # - sourceWorld: 플레이어가 있어야 하는 월드
+  # - sourceLocation: 플레이어가 있어야 하는 위치 (좌표 또는 WORLD_SPAWN)
+  # - sourceRadius: 해당 위치에서 반경 N블록 이내 체크
+  # 현재 코드에서 구현되지 않아 주석 처리됨. 향후 필요 시 구현 예정.
+  #
+  points:
+    # ========== 로비 <-> 마을 ==========
+    # Lobby → Town 이동
+    lobby_to_town:
+      type: TELEPORT
+      # [미구현] sourceWorld: "world_lobby"
+      # [미구현] sourceLocation: {x: 0, y: 64, z: 10}
+      # [미구현] sourceRadius: 3
+      targetWorld: "world"
+      targetLocation: "WORLD_SPAWN"      # [2026-01-22] 수정: 월드 스폰 사용
+      permission: ""
+      message: "§a마을로 이동합니다..."
+      cooldownSeconds: 3
+    
+    # ========== 마을 <-> 야생 ==========
+    # Town → Wild 이동 (야생 스폰 보호)
+    town_to_wild:
+      type: TELEPORT
+      # [미구현] sourceWorld: "world"
+      # [미구현] sourceLocation: {x: 100, y: 64, z: 0}
+      # [미구현] sourceRadius: 3
+      targetWorld: "world_wild"
+      targetLocation: "WORLD_SPAWN"      # 월드 스폰 자동 감지
+      # [미구현] protectSpawn: true      # 베드락 3x3 자동 설치 (WildSpawnManager가 처리)
+      permission: ""
+      message: "§c야생으로 이동합니다. 주의하세요!"
+      cooldownSeconds: 5
+    
+    # Wild → Town 이동
+    # 참고: 이 포인트는 npcMappings에서 제거됨 - WildSpawnManager가 동적으로 처리
+    wild_to_town:
+      type: TELEPORT
+      # [미구현] sourceWorld: "world_wild"
+      # [미구현] sourceLocation: "WORLD_SPAWN"
+      # [미구현] sourceRadius: 5
+      targetWorld: "world"
+      targetLocation: "WORLD_SPAWN"      # [2026-01-22] 수정: 월드 스폰 사용
+      permission: ""
+      message: "§a마을로 돌아갑니다..."
+      cooldownSeconds: 3
+    
+    # ========== 던전/듀얼 GUI ==========
+    # [STUB] NpcTeleportService에서 GUI 타입은 현재 미처리 - 별도 시스템에서 구현 예정
+    # 던전 선택 GUI
+    dungeon_gui:
+      type: GUI_DUNGEON
+      message: "§6던전을 선택해주세요."
+      cooldownSeconds: 1
+    
+    # [STUB] 듀얼 신청 GUI
+    duel_gui:
+      type: GUI_DUEL
+      message: "§6듀얼 상대를 선택해주세요."
+      cooldownSeconds: 1
+    
+    # ========== 마을 <-> 헌터 ==========
+    # [LITE 미사용] 헌터 시스템은 lite에서 제외됨
+    # Town → Hunter 이동
+    town_to_hunter:
+      type: TELEPORT
+      # [미구현] sourceWorld: "world"
+      # [미구현] sourceLocation: {x: -100, y: 64, z: 0}
+      # [미구현] sourceRadius: 3
+      targetWorld: "world_hunter"
+      targetLocation: {x: 0, y: 201, z: 0}     # 헌터 로비 (y=200 플랫폼 위)
+      permission: ""
+      message: "§e헌터 구역으로 이동합니다..."
+      cooldownSeconds: 5
+    
+    # Hunter Lobby → Town 이동
+    hunter_to_town:
+      type: TELEPORT
+      # [미구현] sourceWorld: "world_hunter"
+      # [미구현] sourceLocation: {x: 0, y: 201, z: 0}
+      # [미구현] sourceRadius: 25
+      targetWorld: "world"
+      targetLocation: "WORLD_SPAWN"            # [2026-01-22] 수정: 월드 스폰 사용
+      permission: ""
+      message: "§a마을로 돌아갑니다..."
+      cooldownSeconds: 3
+    
+    # [STUB] 헌터 상점 GUI - LITE 미사용
+    hunter_shop:
+      type: GUI_HUNTER_SHOP
+      message: "§6헌터 상점입니다."
+      cooldownSeconds: 1
+    
+    # [STUB] 헌터 통계 GUI - LITE 미사용
+    hunter_stats:
+      type: GUI_HUNTER_STATS
+      message: "§b전적을 확인합니다."
+      cooldownSeconds: 1
+
+# ============================================
+# 특수 아이템 설정
+# ============================================
+specialItems:
+  # ===== [CoreItemType 호환 키] =====
+  # 코드의 CoreItemType.configKey와 일치하는 명시적 키
+  # 실제 사용 여부와 관계없이 코드 호환성을 위해 정의
+  
+  # [Phase 8 정리] dungeon_inventory_save 제거 - 던전 미구현
+  
+  # 범용 인벤토리 보호권
+  universal_inventory_save:
+    material: PAPER
+    displayName: "&b범용 인벤토리 보호권"
+    lore:
+      - "&7어디서든 사망 시 인벤토리 보호"
+      - "&8사용 시 소멸됩니다."
+    consumeOnUse: true
+    validWorlds:
+      - wild
+      - dungeon
+      - town
+  
+  # ===== 인벤토리 보호권 (실제 사용) =====
+  inventory_protection_ticket:
+    material: PAPER
+    displayName: "&6인벤토리 보호권"
+    lore:
+      - "&7사망 시 아이템을 보호합니다."
+      - "&8사용 시 소멸됩니다."
+    consumeOnUse: true
+    validWorlds:
+      - wild
+      - dungeon
+
+  # [Phase 8 정리] 강화 보호권 제거 - ProtectionScrollFactory로 대체
+  # upgrade_destroy_protection, upgrade_downgrade_protection 삭제
+
+  # ===== 주문서 =====
+  return_scroll:
+    material: PAPER
+    displayName: "&b귀환서"
+    lore:
+      - "&7우클릭하여 마을 중앙 광장으로 귀환합니다."
+      - "&c던전에서 사용 시 던전 포기 처리됩니다."
+      - "&8사용 시 소멸됩니다."
+    consumeOnUse: true
+    cooldownSeconds: 30
+    validWorlds:
+      - town
+      - wild
+      - dungeon
+    target:
+      world: "world"
+      x: 0.5
+      y: 64.0
+      z: 0.5
+      yaw: 0.0
+      pitch: 0.0
+
+  teleport_scroll:
+    material: PAPER
+    displayName: "&d텔레포트 주문서"
+    lore:
+      - "&7마을 또는 야생의 원하는 좌표로 텔레포트합니다."
+      - "&e우클릭하여 사용 (채팅으로 월드/좌표 입력)"
+      - "&8사용 시 소멸됩니다."
+    consumeOnUse: true
+    cooldownSeconds: 60
+    validWorlds:
+      - town
+      - wild
+
+  rebirth_memory_scroll:
+    material: PAPER
+    displayName: "&5전생의 기억 주문서"
+    lore:
+      - "&7과거의 기억을 되살립니다."
+      - "&8사용 시 소멸됩니다."
+    consumeOnUse: true
+
+  # [Phase 8 정리] town_land_deed 제거 - Lands 플러그인 사용
+
+# ============================================
+# 특수 아이템 상점 설정
+# [2026-01-29] 강화 상점과 통합, 가격 조정
+# [2026-01-31] 인플레이션 대응 가격 인상
+# ============================================
+specialShops:
+  # 특수 아이템 상점 - CoreItem + 램프 + 주문서 통합
+  special:
+    displayName: "&d특수 아이템 상점"
+    items:
+      # ========== CoreItem (기존 시스템) ==========
+      # 인벤토리 보호권 (5배 인상)
+      - id: "universal_inventory_save"
+        type: "coreitem"
+        coreItemType: "UNIVERSAL_INVENTORY_SAVE"
+        buyPrice: 25000
+        sellPrice: 12500
+      # 귀환서 (5배 인상)
+      - id: "return_scroll"
+        type: "coreitem"
+        coreItemType: "RETURN_SCROLL"
+        buyPrice: 10000
+        sellPrice: 5000
+      # 텔레포트 주문서 (5배 인상)
+      - id: "teleport_scroll"
+        type: "coreitem"
+        coreItemType: "TELEPORT_SCROLL"
+        buyPrice: 50000
+        sellPrice: 25000
+      # 전생의 기억 주문서 (6배 인상)
+      - id: "rebirth_memory_scroll"
+        type: "coreitem"
+        coreItemType: "REBIRTH_MEMORY_SCROLL"
+        buyPrice: 60000
+        sellPrice: 30000
+      # 기본 인챈트 뽑기권 (2배 인상)
+      - id: "basic_enchant_lottery"
+        type: "coreitem"
+        coreItemType: "BASIC_ENCHANT_LOTTERY"
+        buyPrice: 100000
+        sellPrice: -1
+      # 특수 인챈트 뽑기권 (2배 인상)
+      - id: "special_enchant_lottery"
+        type: "coreitem"
+        coreItemType: "SPECIAL_ENCHANT_LOTTERY"
+        buyPrice: 200000
+        sellPrice: -1
+      
+      # ========== 램프 (기존 LampItemFactory 사용) ==========
+      # 무기 램프 (2배 인상)
+      - id: "lamp_weapon"
+        type: "lamp"
+        lampType: "WEAPON_LAMP"
+        buyPrice: 200000
+        sellPrice: -1
+      # 방어구 램프 (2배 인상)
+      - id: "lamp_armor"
+        type: "lamp"
+        lampType: "ARMOR_LAMP"
+        buyPrice: 200000
+        sellPrice: -1
+      # 도구 램프 (2배 인상)
+      - id: "lamp_tool"
+        type: "lamp"
+        lampType: "TOOL_LAMP"
+        buyPrice: 200000
+        sellPrice: -1
+      # 램프 슬롯 확장권 (2.5배 인상)
+      - id: "lamp_slot_expand"
+        type: "lamp_ticket"
+        ticketType: "SLOT_EXPAND"
+        buyPrice: 500000
+        sellPrice: -1
+      # [Phase 8 정리] lamp_remove_ticket 제거 - 불필요
+      
+      # ========== 보호 주문서 (강화 시스템) ==========
+      # 파괴 방지 주문서 (4배 인상)
+      - id: "scroll_destroy"
+        type: "protection_scroll"
+        scrollType: "DESTROY"
+        buyPrice: 20000
+        sellPrice: -1
+      # 하락 방지 주문서 (4배 인상)
+      - id: "scroll_downgrade"
+        type: "protection_scroll"
+        scrollType: "DOWNGRADE"
+        buyPrice: 20000
+        sellPrice: -1
+
+# ============================================
+# 강화 시스템 설정
+# ============================================
+enhance:
+  # ===== 메시지 설정 =====
+  # v2.1: 인챈트 효과 발동 메시지 ON/OFF
+  showEnchantMessages: true  # false로 설정 시 "출혈 부여!", "번개 강타!" 등 메시지 숨김
+  
+  # ===== 커스텀 인챈트 =====
+  # Stage 8에서 램프와 중복되는 인챈트 제거됨 (lifesteal, critical_boost, execute, dodge, reflect, vitality, regeneration, last_stand, auto_smelt, lucky_catch)
+  # 최종 11개 인챈트: 무기 5개, 방어구 2개, 도구 4개
+  enchants:
+    # === 무기 인챈트 ===
+    bleed:
+      enabled: true
+    thunder_strike:
+      enabled: true
+    frost_aspect:
+      enabled: true
+    vampire:
+      enabled: true
+    true_damage:
+      enabled: true
+    # === 방어구 인챈트 (v2.4 Phase 2 밸런싱) ===
+    speed_boost:
+      enabled: true
+      # v2.4: 8%/15%/25% (기존 10%/20%/30%에서 너프)
+      percentPerLevel: [8, 15, 25]
+    double_jump:
+      enabled: true
+    regeneration:
+      enabled: true
+      # v2.4: 1/2/3 HP/3초 (기존 0.5/1.0/1.5에서 버프)
+      hpPerLevel: [1, 2, 3]
+    # === 도구 인챈트 (v2.4 Phase 2 밸런싱) ===
+    vein_miner:
+      enabled: true
+    harvest:
+      enabled: true
+    telekinesis:
+      enabled: true
+      # 보류: 추후 검토
+    wisdom:
+      enabled: true
+      # v2.4: 5%/10%/15% (기존 10%/20%/30%에서 너프)
+      percentPerLevel: [5, 10, 15]
+    durability:
+      enabled: false
+      # v2.4: 비활성화 - 바닐라 Unbreaking과 기능 중복, 바닐라 확장 인챈트로 이전 예정
+
+  # ===== 램프 시스템 =====
+  lamps:
+    types:
+      weapon: { price: 10000 }
+      armor: { price: 10000 }
+      tool: { price: 8000 }
+      universal: { price: 25000 }
+    effects:
+      soul_reaper: { enabled: true, weight: 2.0 }
+      berserker: { enabled: true, weight: 8.0 }
+      chain_lightning: { enabled: true, weight: 20.0 }
+      phantom_strike: { enabled: true, weight: 8.0 }
+      poison_blade: { enabled: true, weight: 30.0 }
+      iron_will: { enabled: true, weight: 20.0 }
+      phoenix_blessing: { enabled: true, weight: 2.0 }
+      thorns_aura: { enabled: true, weight: 8.0 }
+      guardian_angel: { enabled: true, weight: 20.0 }
+      shadow_cloak: { enabled: true, weight: 30.0 }
+      fortune_blessing: { enabled: true, weight: 8.0 }
+      midas_touch: { enabled: true, weight: 20.0 }
+      experience_boost: { enabled: true, weight: 30.0 }
+      efficiency_master: { enabled: true, weight: 20.0 }
+      magnetic_field: { enabled: true, weight: 30.0 }
+      luck_aura: { enabled: true, weight: 8.0 }
+      durability_master: { enabled: true, weight: 20.0 }
+
+  # ===== 강화 시스템 (+0 ~ +100) =====
+  # [2026-01-23] 비용 인상: baseCost 100→230, costMultiplier 1.15→1.16
+  # [2026-01-31] 밸런스 조정: 초반 비용↑, 하락률 2배
+  #   - baseCost: 230→800, costMultiplier: 1.16→1.139
+  #   - 하락률 전 구간 2배 적용
+  upgrade:
+    enabled: true
+    baseCost: 800
+    costMultiplier: 1.139
+    # 범위별 확률 오버라이드 (선택사항)
+    ranges:
+      # 0-10: 쉬운 구간
+      "0-10":
+        successRate: 0.90
+        downgradeRate: 0
+        destroyRate: 0
+      # 11-30: 중간 구간 (하락률 5%→10%)
+      "11-30":
+        successRate: 0.60
+        downgradeRate: 0.10
+        destroyRate: 0
+      # 31-50: 어려운 구간 (하락률 15%→30%)
+      "31-50":
+        successRate: 0.30
+        downgradeRate: 0.30
+        destroyRate: 0.02
+      # 51-80: 극한 구간 (하락률 20%→40%)
+      "51-80":
+        successRate: 0.15
+        downgradeRate: 0.40
+        destroyRate: 0.05
+      # 81-100: 전설 구간 (하락률 25%→50%)
+      "81-100":
+        successRate: 0.05
+        downgradeRate: 0.50
+        destroyRate: 0.10
+
+# ============================================
+# Recovery Storage 설정 (Town 보관소)
+# ============================================
+recoveryStorage:
+  maxEntriesPerPlayer: 50        # 플레이어당 최대 보관 엔트리 수
+  claimBaseCost: 500             # 기본 회수 비용 (PvP 사망은 무료)
+
+# ============================================
+# [STUB] 보이드 사망 패널티 (야생)
+# AngelChest 플러그인과 연동 필요 - 단독 구현 아님
+# ============================================
+wild:
+  voidPenalty:
+    xpPercent: 20                # 경험치 손실 비율
+    consumablesPercent: 20       # 소모성 아이템 손실 비율
+    armorDurabilityPercent: 40   # 방어구 내구도 손실 비율
+
+# [LITE] hunter, duel, duelArenas 시스템은 제거됨
+
+# ============================================
+# 사망 귀책 추적 (BlameTracker) - Phase 1
+# ============================================
+blameTracker:
+  enabled: true                    # 추적 활성화
+  windowSeconds: 12                # 공격자 귀책 윈도우 (초)
+  enabledWorlds:                   # 추적할 월드 목록
+    - wild
+    - hunter
+    - duel
+  maxAggressorsPerVictim: 10       # 피해자당 최대 공격자 기록 수
+  aggressorEntryExpireSeconds: 20  # 공격자 기록 만료 시간 (windowSeconds 이상)
+  logLevel: "INFO"                 # 로그 레벨 (INFO 또는 DEBUG)
+  highConfidenceOnlyForAutoActions: true  # 자동 패널티는 HIGH 신뢰도만 (예약)
+
+# ============================================
+# 사망 귀책 추적 Phase-2 (간접 킬) - BETA
+# ============================================
+# ⚠️ Phase-2는 증거 기반 데이터 수집용입니다.
+# ⚠️ 자동 처벌/패널티는 절대 적용되지 않습니다.
+# ⚠️ 관리자 검토용 추론 데이터로만 사용됩니다.
+blameTrackerPhase2:
+  enabled: true                    # Phase-2 활성화 (BETA)
+  windowSeconds: 4                 # 간접 킬 연결 윈도우 (초)
+  radiusBlocks: 6.0                # 근처 판정 반경 (블록)
+  maxEventsPerWorld: 200           # 월드당 최대 이벤트 버퍼 크기
+  enabledWorlds:                   # Wild 전용 (BETA)
+    - wild
+  trackPistons: true               # 피스톤 추적
+  trackTrapdoors: true             # 트랩도어/레버/버튼 추적
+  trackFluids: true                # 물/용암 배치 추적
+  pistonActivatorLookbackSeconds: 3  # 피스톤 활성화자 조회 시간 (초)
+  logLevel: "DEBUG"                # 베타 기간 상세 로그 (INFO: 요약만)
+  maxVerticalDistance: 15.0        # 최대 수직 거리 제한 (블록)
+
+# ============================================
+# 야생 월드 리셋 시스템 (Wild Reset)
+# ============================================
+wildReset:
+  enabled: false                   # 자동 리셋 (기본 비활성화, 수동 리셋만 사용)
+  intervalDays: 7                  # 리셋 주기 (일)
+  announceMinutes:                 # 사전 알림 (분 전)
+    - 10
+    - 5
+    - 1
+  countdownSeconds: 10             # 최종 카운트다운 (초)
+  backupEnabled: true              # 리셋 전 백업
+  backupFolder: "plugins/TycoonLite/backups/wild"
+  keepBackups: 10                  # 유지할 백업 수
+  worlds:                          # 리셋 대상 월드 (오버월드 + 네더 + 엔드)
+    - world_wild
+    - world_wild_nether
+    - world_wild_the_end
+
+# ============================================
+# 야생 스폰 포인트 시스템 (Wild Spawn)
+# ============================================
+wildSpawn:
+  # 귀환 NPC 설정
+  npcEnabled: true                 # Citizens NPC 자동 생성
+  returnNpcName: "§e[귀환] §f마을로 돌아가기"
+  returnTarget: "town_spawn"       # 이동 대상 (town_spawn 또는 x,y,z,world 좌표)
+  
+  # 다중 스폰 포인트 설정
+  multipleSpawns:
+    enabled: true                  # 다중 스폰 활성화
+    count: 5                       # 스폰 포인트 개수
+    minDistance: 500               # 포인트 간 최소 거리 (블록)
+    spreadRadius: 2000             # 스폰 분산 반경 (블록)
+
+# ============================================
+# 악용 방지 시스템 (Anti-Exploit)
+# ============================================
+
+# 주민 거래 제한 (옵션 1: BottCoin 유료 거래 - 점진적 상승)
+# - 무료 거래 N회 후 BottCoin으로 추가 거래 가능
+# - 업적 달성을 위한 최소한의 거래 허용 + 무한 악용 방지
+# - 점진적 비용 상승:
+#   11~15회: 1 BottCoin
+#   16~20회: 2 BottCoin
+#   21~30회: 3 BottCoin
+#   31~50회: 5 BottCoin
+#   51회 이상: 10 BottCoin
+villagerTrade:
+  enabled: true                    # 거래 제한 활성화
+  blockedWorlds:                   # 제한 적용 월드 [2026-01-22] town 추가
+    - town
+    - wild
+    - dungeon
+  freeTradeLimit: 10               # 무료 거래 횟수 (업적 달성 충분)
+  # [2026-01-24] BD 기반 단계별 비용 (점진적 상승)
+  tradeCosts:
+    tier1: 5000                    # 11~15회 (무료 10회 + 1~5)
+    tier2: 10000                   # 16~20회 (무료 10회 + 6~10)
+    tier3: 15000                   # 21~30회 (무료 10회 + 11~20)
+    tier4: 25000                   # 31~50회 (무료 10회 + 21~40)
+    tier5: 50000                   # 51회 이상
+  # BD 부족 시 표시되는 메시지 (형식: %,d = 필요 BD, %,d = 보유 BD)
+  message: "&c[거래] BD가 부족합니다. (필요: %,d, 보유: %,d)"
+
+# 자동화 농장 무효화
+antiFarm:
+  enabled: true                    # 농장 무효화 활성화
+  enabledWorlds:                   # 적용할 월드
+    - wild
+    - dungeon
+  requirePlayerContribution: true  # 플레이어 기여 필수
+  playerContributionWindowSeconds: 12  # 기여 판정 윈도우 (초)
+  noPlayerNearbyRadius: 16         # 근처 플레이어 판정 반경 (블록)
+  repeatDeathChunkThreshold: 20    # 청크당 반복 사망 임계값
+  repeatDeathWindowSeconds: 60     # 반복 사망 윈도우 (초)
+  wildNonPlayerDropMultiplier: 0.0     # 야생 비플레이어 킬 드랍 배율
+  dungeonNonPlayerDropMultiplier: 0.0  # 던전 비플레이어 킬 드랍 배율
+  xpMultiplierWhenNonPlayer: 0.0   # 비플레이어 킬 경험치 배율
+  logLevel: "INFO"                 # 로그 레벨 (INFO/DEBUG)
+
+# X-ray 휴리스틱 분석기 (Paper Anti-Xray 보완)
+xrayAnalyzer:
+  enabled: true                        # 휴리스틱 분석 활성화
+  enabledWorlds:                       # 적용할 월드
+    - wild
+  diamondFindRateThreshold: 0.03       # 희귀 광물 발견율 임계값 (3%)
+  straightLineMineThreshold: 25        # 직선 채굴 블록 임계값
+  rapidOreFindThreshold: 4             # 3분 내 희귀 광물 발견 임계값
+  tunnelEfficiencyThreshold: 0.08      # 터널 효율 임계값 (8%)
+  sessionTimeoutMinutes: 10            # 세션 타임아웃 (분)
+  alertCooldownMinutes: 15             # 같은 플레이어 알림 쿨다운 (분)
+  minBlocksForAnalysis: 50             # 분석 최소 블록 수
+
+# AFK 보상 감쇠
+afkDampen:
+  enabled: true                    # AFK 감쇠 활성화
+  afkAfterSeconds: 480             # AFK 판정 시간 (8분)
+  dampenWorlds:                    # 감쇠 적용 월드
+    - wild
+  afkDropMultiplier: 0.0           # AFK 드랍 배율
+  afkXpMultiplier: 0.0             # AFK 경험치 배율
+  logLevel: "INFO"                 # 로그 레벨 (INFO/DEBUG)
+
+# ============================================
+# Stage 4: 경제 루프 MVP 설정
+# ============================================
+
+# 제련 시스템 (Earn Route)
+refining:
+  baseFeePer: 10                 # 기본 제련 비용 (개당)
+  minerFeeReductionPerLevel: 0.05  # 광부 레벨당 비용 감소 (5%)
+  bonusOutputBaseChance: 0.0     # 추가 생산 기본 확률
+  # 커스텀 레시피 (기본값 외 추가/수정)
+  # recipes:
+  #   RAW_IRON:
+  #     output: IRON_INGOT
+  #     outputCount: 1
+  #     tier: 1
+  #     fee: 5
+
+# ============================================
+# ============================================
+# [STUB] 직업 업그레이드 시스템 (NPC GUI에서 구매)
+# 향후 구현 예정 - 현재 config만 정의됨
+# ============================================
+jobUpgrades:
+  maxLevel: 5                    # 최대 업그레이드 레벨
+  
+  # 레벨별 가격 (BD + BottCoin)
+  prices:
+    1: { bd: 50000, bottcoin: 0 }
+    2: { bd: 120000, bottcoin: 0 }
+    3: { bd: 250000, bottcoin: 10 }
+    4: { bd: 400000, bottcoin: 15 }
+    5: { bd: 600000, bottcoin: 25 }
+  
+  # ===== 공통 업그레이드 (모든 직업) =====
+  common:
+    sell_cap_increase:
+      displayName: "판매 한도 증가"
+      description: "시간당 판매 한도 +10개/레벨"
+      effectPerLevel: 10
+    level_bonus_boost:
+      displayName: "레벨 보너스 증폭"
+      description: "레벨당 가격 보너스 +0.5%/레벨"
+      effectPerLevel: 0.005
+    exp_boost:
+      displayName: "경험치 부스트"
+      description: "획득 XP +5%/레벨"
+      effectPerLevel: 0.05
+  
+  # ===== 광부 고유 업그레이드 =====
+  miner:
+    refine_efficiency:
+      displayName: "제련 효율"
+      description: "제련 비용 -5%/레벨"
+      effectPerLevel: 0.05
+    bonus_output:
+      displayName: "행운의 광부"
+      description: "추가 생산 확률 +2%/레벨"
+      effectPerLevel: 0.02
+    ore_detection:
+      displayName: "광맥 감지"
+      description: "광맥 하이라이트 범위 +2블록/레벨 (모드 연동)"
+      effectPerLevel: 2
+  
+  # ===== 농부 고유 업그레이드 =====
+  farmer:
+    harvest_bonus:
+      displayName: "풍요의 손길"
+      description: "수확량 +5%/레벨"
+      effectPerLevel: 0.05
+    growth_speed:
+      displayName: "성장 촉진"
+      description: "작물 성장 속도 +3%/레벨"
+      effectPerLevel: 0.03
+    prime_chance:
+      displayName: "프라임 확률"
+      description: "Prime/Trophy 등급 확률 +1%/레벨"
+      effectPerLevel: 0.01
+  
+  # ===== 어부 고유 업그레이드 =====
+  fisher:
+    pity_reduction:
+      displayName: "천장 감소"
+      description: "Pity 카운터 -5%/레벨"
+      effectPerLevel: 0.05
+    rare_chance:
+      displayName: "대어 확률"
+      description: "Epic/Legendary 확률 +0.5%/레벨"
+      effectPerLevel: 0.005
+    cast_speed:
+      displayName: "낚시 속도"
+      description: "캐스트 대기 시간 -3%/레벨"
+      effectPerLevel: 0.03
+
+# [STUB - EconomyMetricsService 미구현]
+# 인플레이션 컨트롤 시스템 - 향후 구현 예정
+# BD 유입/유출 추적 및 자동 배율 조정 기능
+economyMetrics:
+  targetNetFlow: 0               # 목표 순 유동성 (0 = 균형)
+  sellMultiplierMin: 0.5         # 판매 배율 최소
+  sellMultiplierMax: 1.5         # 판매 배율 최대
+  sinkMultiplierMin: 0.8         # 싱크 배율 최소
+  sinkMultiplierMax: 1.5         # 싱크 배율 최대
+  adjustmentSpeed: 0.01          # 시간당 조정 속도
+
+# ============================================
+# 상점 시스템 설정
+# ============================================
+shop:
+  # 시장 조작 방지 시스템 (ManipulationGuard)
+  # 분할 거래 탐지, 거래량 폭탄 탐지, 대량 거래 영향력 감소 등
+  manipulationGuard:
+    enabled: true
+
+# ============================================
+# [Stage 10.6] 동적 가격 시스템
+# ============================================
+dynamicPrice:
+  # 가격 갱신 주기 (분)
+  updateIntervalMinutes: 10
+  
+  # 가격 변동 범위 (기준가 대비 %)
+  maxPriceChangePercent: 70      # 기준가 ±70%
+  
+  # 주기당 최대 변동폭 (%)
+  maxChangePerUpdate: 10         # 한 번에 최대 ±10%
+  
+  # 차익거래 방지: 매입가/판매가 역전 시 강제 보정
+  # 매입가 = 판매가 × sellSpreadRatio
+  sellSpreadRatio: 0.5
+  
+  # 시세 조작 방지 (연성 제한)
+  volumeInfluence:
+    # 거래량 구간별 가격 영향력 (%)
+    # 1~10개: 100%, 11~50개: 50%, 51~100개: 20%, 100개 이상: 10%
+    tier1Max: 10                 # 1~10개
+    tier1Influence: 1.0          # 100%
+    tier2Max: 50                 # 11~50개
+    tier2Influence: 0.5          # 50%
+    tier3Max: 100                # 51~100개
+    tier3Influence: 0.2          # 20%
+    tier4Influence: 0.1          # 100개 이상: 10%
+
+# ============================================
+# 관리자 설정
+# ============================================
+admin:
+  # 개발 모드 (true: 위험한 명령어 활성화, false: 프로덕션 모드)
+  # 주의: 프로덕션에서는 반드시 false로 설정!
+  devMode: false
+  
+  # 슈퍼관리자 목록 (UUID)
+  superAdmins:
+    CORNSFAB: "d86d7256-96ed-4805-abd8-771f6fc52886"
+
+
+# ============================================
+# 개인 거래 시스템 설정
+# ============================================
+trade:
+  # 거래 시스템 활성화 여부
+  enabled: true
+  
+  # 거래 요청 대기 시간 (초) - 상대방이 수락할 때까지 대기
+  requestTimeout: 60
+  
+  # 쿨타임 설정 (초)
+  cooldown:
+    # 전체 쿨타임 - 누구에게든 거래 요청 후 대기 시간
+    global: 60
+    # 대상별 쿨타임 - 같은 사람에게 거래 요청 후 대기 시간
+    perTarget: 120
+  
+  # 화폐 프리셋 버튼 (클릭 시 증가량)
+  currency:
+    # BD 프리셋 [일반클릭, Shift클릭, ...]
+    bdPresets: [100, 1000, 10000, 100000]
+    # BottCoin 프리셋
+    bcPresets: [1, 5, 10, 50]
+  
+  # 거래 가능 아이템 슬롯 수 (최대 12)
+  itemSlots: 12
+
+# ============================================
+# BC 치장 상점 설정
+# ============================================
+# BC(BottCoin)로 구매하는 칭호/치장 상점
+bcShop:
+  enabled: true
+
+# BC 상점 NPC 연동 설정
+# NPC 이름에 키워드가 포함되면 해당 BC 상점이 열립니다.
+bcShopNpc:
+  enabled: true
+  mappings:
+    칭호상인: title
+    칭호 상인: title
+    치장상인: cosmetic
+    치장 상인: cosmetic
+    TitleShop: title
+    CosmeticShop: cosmetic
+
+# ============================================
+# [Stage 10.6] 상점 NPC 연동 설정
+# ============================================
+# NPC 이름에 키워드가 포함되면 해당 상점이 열립니다.
+# 예: "§6광부 상인 NPC" → "광부 상인" 매칭 → miner 상점
+#
+# Citizens NPC 생성 방법:
+#   1. /npc create 광부 상인
+#   2. /npc skin <스킨이름>
+#   3. NPC 클릭하면 자동으로 상점 GUI 오픈!
+#
+shopNpc:
+  enabled: true
+  debug: false                    # true시 로그 출력
+  
+  # NPC 이름 키워드 → 상점 ID 매핑
+  # 형식: "NPC이름키워드": "상점ID"
+  mappings:
+    # ===== 직업 상점 (동적가) =====
+    광부 상인: miner
+    광물상인: miner
+    광물 상인: miner
+    농부 상인: farmer
+    어부 상인: fisher
+    장인 상인: artisan
+    약초 상인: herbalist
+    요리사 상인: chef
+    기술자 상인: engineer
+    
+    # ===== 마켓 상점 (동적가 + 비대칭 레벨 보너스) =====
+    음식 상인: food
+    음식상인: food
+    식료품 상인: food
+    전리품 상인: loot
+    전리품상인: loot
+    사냥꾼 상인: loot
+    몬스터 상인: loot
+    
+    # ===== 일반 상점 (고정가) =====
+    동물 상인: spawnegg
+    동물상인: spawnegg
+    스폰알 상인: spawnegg
+    목장 상인: spawnegg
+    
+    # ===== 기타 상점 =====
+    # [삭제됨] 강화 상인: enhance - UpgradeNpcListener에서 "대장장이" 키워드로 처리
+    코스메틱 상인: cosmetic
+    잡화 상인: general
+    마법 상인: magic
+    
+    # ===== 영문 매핑 (선택) =====
+    miner shop: miner
+    farmer shop: farmer
+    fisher shop: fisher
+    artisan shop: artisan
+    herbalist shop: herbalist
+    chef shop: chef
+    engineer shop: engineer
+    enhancement shop: enhance
+    cosmetic shop: cosmetic
+    general store: general
+    magic shop: magic
+    food shop: food
+    loot shop: loot
+    spawnegg shop: spawnegg
+    animal shop: spawnegg
+
+# ============================================
+# 인챈트 뽑기권 설정
+# ============================================
+lottery:
+  # ===== 기본 인챈트 뽑기권 (바닐라 인챈트) =====
+  # 가격은 specialShops.special.items에서 buyPrice로 설정됨
+  basic:
+    # 등급별 확률 테이블
+    # weight: 가중치 (전체 합 기준 비율)
+    # enchants: "인챈트이름:레벨" 목록
+    tiers:
+      S:
+        weight: 3
+        enchants:
+          - "MENDING:1"
+          - "INFINITY:1"
+          - "SILK_TOUCH:1"
+      A:
+        weight: 12
+        enchants:
+          - "FORTUNE:3"
+          - "SHARPNESS:5"
+          - "PROTECTION:4"
+          - "POWER:5"
+          - "LOOTING:3"
+          - "UNBREAKING:3"
+          - "EFFICIENCY:5"
+          - "FEATHER_FALLING:4"
+      B:
+        weight: 35
+        enchants:
+          - "FORTUNE:2"
+          - "SHARPNESS:3"
+          - "SHARPNESS:4"
+          - "PROTECTION:2"
+          - "PROTECTION:3"
+          - "POWER:3"
+          - "POWER:4"
+          - "FIRE_ASPECT:2"
+          - "KNOCKBACK:2"
+          - "LOOTING:2"
+          - "UNBREAKING:2"
+          - "EFFICIENCY:3"
+          - "EFFICIENCY:4"
+          - "SWEEPING_EDGE:3"
+          - "THORNS:3"
+      C:
+        weight: 50
+        enchants:
+          - "FORTUNE:1"
+          - "SHARPNESS:1"
+          - "SHARPNESS:2"
+          - "PROTECTION:1"
+          - "POWER:1"
+          - "POWER:2"
+          - "FIRE_ASPECT:1"
+          - "KNOCKBACK:1"
+          - "LOOTING:1"
+          - "UNBREAKING:1"
+          - "EFFICIENCY:1"
+          - "EFFICIENCY:2"
+          - "SMITE:1"
+          - "SMITE:2"
+          - "SMITE:3"
+          - "BANE_OF_ARTHROPODS:1"
+          - "BANE_OF_ARTHROPODS:2"
+          - "PROJECTILE_PROTECTION:1"
+          - "PROJECTILE_PROTECTION:2"
+          - "BLAST_PROTECTION:1"
+          - "BLAST_PROTECTION:2"
+          - "FIRE_PROTECTION:1"
+          - "FIRE_PROTECTION:2"
+          - "AQUA_AFFINITY:1"
+          - "RESPIRATION:1"
+          - "RESPIRATION:2"
+          - "DEPTH_STRIDER:1"
+          - "DEPTH_STRIDER:2"
+
+  # ===== 특수 인챈트 뽑기권 (커스텀 인챈트) =====
+  # 가격은 specialShops.special.items에서 buyPrice로 설정됨
+  special:
+    # [2026-01-31] S,A등급 확률 추가 하향 (인플레이션 대응)
+    tiers:
+      S:
+        weight: 0.5   # 1 → 0.5 (0.5%)
+        enchants:
+          # 무기
+          - "vampire:3"
+          - "true_damage:3"
+          - "triumph:1"
+          # 방어구
+          - "double_jump:1"
+          - "water_walker:1"
+          - "vitality:3"
+          - "night_vision:1"
+          - "regeneration:3"
+          # 도구
+          - "vein_miner:3"
+          # 활
+          - "sniper:3"
+      A:
+        weight: 3   # 5 → 3 (3%)
+        enchants:
+          # 무기
+          - "vampire:2"
+          - "true_damage:2"
+          - "thunder_strike:3"
+          - "grievous_wounds:3"
+          - "hunter:3"
+          - "precision:3"
+          # 방어구
+          - "speed_boost:3"
+          - "steadfast:3"
+          - "vitality:2"
+          - "regeneration:2"
+          - "toughness:2"
+          # 도구
+          - "telekinesis:1"
+          - "vein_miner:2"
+          - "wisdom:5"
+          - "wisdom:4"
+          - "expertise:3"
+          - "lucky_hand:3"
+          - "repair_efficiency:3"
+          # 활
+          - "quick_draw:3"
+          - "sniper:2"
+          - "hunters_eye:3"
+      B:
+        weight: 47.5  # 45 → 47.5 (47.5%)
+        enchants:
+          # 무기
+          - "bleed:3"
+          - "bleed:2"
+          - "thunder_strike:2"
+          - "frost_aspect:2"
+          - "vampire:1"
+          - "true_damage:1"
+          - "grievous_wounds:2"
+          - "hunter:2"
+          - "precision:2"
+          # 방어구
+          - "speed_boost:2"
+          - "steadfast:2"
+          - "vitality:1"
+          - "regeneration:1"
+          - "toughness:1"
+          # 도구
+          - "vein_miner:1"
+          - "wisdom:3"
+          - "wisdom:2"
+          - "expertise:2"
+          - "lucky_hand:2"
+          - "repair_efficiency:2"
+          # 활
+          - "quick_draw:2"
+          - "sniper:1"
+          - "hunters_eye:2"
+          - "frost_arrow:3"
+          - "frost_arrow:2"
+      C:
+        weight: 49  # 유지 (49%)
+        enchants:
+          # 무기
+          - "bleed:1"
+          - "thunder_strike:1"
+          - "frost_aspect:1"
+          - "grievous_wounds:1"
+          - "hunter:1"
+          - "precision:1"
+          # 방어구
+          - "speed_boost:1"
+          - "steadfast:1"
+          # 도구
+          - "harvest:1"
+          - "wisdom:1"
+          - "expertise:1"
+          - "lucky_hand:1"
+          - "repair_efficiency:1"
+          # 활
+          - "quick_draw:1"
+          - "hunters_eye:1"
+          - "frost_arrow:1"
+
+# ============================================
+# [마이그레이션] 커스텀 아이템 온라인 마이그레이션
+# ============================================
+# 플레이어 접속/상자 열 때 자동으로 아이템 변환
+# 서버 API를 통한 안전한 방식 (청크 손상 위험 없음)
+#
+# 처리 항목:
+# 1. CMD 변경: 1620→2070, 1621→2071
+# 2. Material 변경: NETHER_STAR/IRON_INGOT/MAP/BOOK 등 → PAPER
+# 3. PDC 키 마이그레이션: tycoonlite → tycoon
+migration:
+  # 마이그레이션 활성화 (완료 후 false로 변경)
+  enabled: false
+  
+  # PDC 키 마이그레이션 (tycoonlite → tycoon)
+  migrate_pdc_keys: true
+  
+  # CustomModelData 매핑 (구 CMD → 새 CMD)
+  # 기본 매핑: 1620→2070 (램프 슬롯 확장권), 1621→2071 (램프 제거권)
+  # config에 정의 없으면 코드 기본값 사용
+  cmd_mappings:
+    1620: 2070  # LAMP_SLOT_TICKET
+    1621: 2071  # LAMP_REMOVE_TICKET
+
+# ============================================
+# 모드 연동 설정 (클라이언트 모드 통신)
+# ============================================
+mod_integration:
+  enabled: true  # 모드 연동 활성화 (tycoon:ui_data 채널)

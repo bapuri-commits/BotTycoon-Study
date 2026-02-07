@@ -1,0 +1,30 @@
+# Build artifacts
+target/
+build/
+.gradle/
+out/
+run/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Cursor (개인 설정 제외, rules는 포함)
+.cursor/*
+!.cursor/rules/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Compiled
+*.class
+*.jar
+*.war
+
+# Logs
+*.log

@@ -1,0 +1,630 @@
+# ============================================
+# Tycoon Lite - 업적 (Achievement) 설정
+# ============================================
+# 설정 버전 (자동 업데이트용 - 수정 금지)
+config-version: 1
+# 
+# 업적 구조:
+#   achievements:
+#     업적_ID:
+#       name: "표시 이름"
+#       description: "설명"
+#       type: CODEX | JOB | PVP | VANILLA
+#       tier: NORMAL | RARE | EPIC | LEGENDARY
+#       target: 목표값 (0 = 즉시 달성형, >0 = 진행형)
+#       bottcoin: BottCoin 보상 (0 = 등급 기본값)
+#       title: LuckPerms 그룹명 (null = 없음)
+#
+# 등급별 기본 BottCoin 보상:
+#   NORMAL: 1
+#   RARE: 5
+#   EPIC: 15
+#   LEGENDARY: 25
+
+achievements:
+
+  # ============================================
+  # 도감 (CODEX) 업적
+  # ============================================
+  codex_10:
+    name: "초보 수집가"
+    description: "도감에 10개의 아이템을 등록했습니다!"
+    type: CODEX
+    tier: NORMAL
+    target: 10
+    bottcoin: 1
+    title: null
+    
+  codex_25:
+    name: "수집가"
+    description: "도감에 25개의 아이템을 등록했습니다!"
+    type: CODEX
+    tier: NORMAL
+    target: 25
+    bottcoin: 3
+    title: null
+    
+  codex_50:
+    name: "열정적인 수집가"
+    description: "도감에 50개의 아이템을 등록했습니다!"
+    type: CODEX
+    tier: RARE
+    target: 50
+    bottcoin: 5
+    title: "title_collector"
+    
+  codex_100:
+    name: "도감 마스터"
+    description: "도감에 100개의 아이템을 등록하여 마스터가 되었습니다!"
+    type: CODEX
+    tier: LEGENDARY
+    target: 100
+    bottcoin: 25
+    title: "title_codex_master"
+
+  # ============================================
+  # 직업 (JOB) 업적
+  # ============================================
+  first_job:
+    name: "첫 직업"
+    description: "첫 번째 직업을 선택했습니다!"
+    type: JOB
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  job_level_10:
+    name: "견습생 탈출"
+    description: "직업 레벨 10을 달성했습니다!"
+    type: JOB
+    tier: NORMAL
+    target: 10
+    bottcoin: 2
+    title: null
+    
+  job_level_25:
+    name: "숙련공"
+    description: "직업 레벨 25를 달성했습니다!"
+    type: JOB
+    tier: RARE
+    target: 25
+    bottcoin: 5
+    title: null
+    
+  job_max_level:
+    name: "장인의 길"
+    description: "직업 만렙을 달성하여 장인이 되었습니다!"
+    type: JOB
+    tier: EPIC
+    target: 0
+    bottcoin: 15
+    title: "title_artisan"
+    
+  miner_grade_up:
+    name: "광부 승급"
+    description: "광부 직업 등급을 올렸습니다!"
+    type: JOB
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  farmer_grade_up:
+    name: "농부 승급"
+    description: "농부 직업 등급을 올렸습니다!"
+    type: JOB
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  fisher_grade_up:
+    name: "어부 승급"
+    description: "어부 직업 등급을 올렸습니다!"
+    type: JOB
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+
+  # ============================================
+  # PvP 업적
+  # ============================================
+  pvp_first_kill:
+    name: "첫 승리"
+    description: "첫 번째 PvP 승리를 거뒀습니다!"
+    type: PVP
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  pvp_10_kills:
+    name: "전사"
+    description: "PvP에서 10번의 승리를 거뒀습니다!"
+    type: PVP
+    tier: RARE
+    target: 10
+    bottcoin: 5
+    title: "title_warrior"
+    
+  pvp_50_kills:
+    name: "챔피언"
+    description: "PvP에서 50번의 승리를 거뒀습니다!"
+    type: PVP
+    tier: EPIC
+    target: 50
+    bottcoin: 15
+    title: "title_champion"
+    
+  pvp_100_kills:
+    name: "전설의 전사"
+    description: "PvP에서 100번의 승리를 거두며 전설이 되었습니다!"
+    type: PVP
+    tier: LEGENDARY
+    target: 100
+    bottcoin: 50
+    title: "title_legend"
+
+  # ============================================
+  # 바닐라 (VANILLA) 업적 - 마인크래프트 진행도 연동
+  # ============================================
+  vanilla_story_mine_diamond:
+    name: "다이아몬드!"
+    description: "귀중한 다이아몬드를 발견했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_story_enter_the_nether:
+    name: "네더로"
+    description: "네더 차원으로 진입했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_story_enter_the_end:
+    name: "끝?"
+    description: "엔드 차원으로 진입했습니다!"
+    type: VANILLA
+    tier: EPIC
+    target: 0
+    bottcoin: 10
+    title: null
+    
+  vanilla_end_kill_dragon:
+    name: "끝!"
+    description: "엔더 드래곤을 처치했습니다!"
+    type: VANILLA
+    tier: LEGENDARY
+    target: 0
+    bottcoin: 100
+    title: "title_dragon_slayer"
+    
+  vanilla_nether_netherite_armor:
+    name: "잔해 속에서"
+    description: "최강의 네더라이트 갑옷을 완성했습니다!"
+    type: VANILLA
+    tier: LEGENDARY
+    target: 0
+    bottcoin: 50
+    title: null
+    
+  vanilla_adventure_hero_of_the_village:
+    name: "마을의 영웅"
+    description: "마을을 습격에서 지켜냈습니다!"
+    type: VANILLA
+    tier: EPIC
+    target: 0
+    bottcoin: 25
+    title: "title_village_hero"
+    
+  vanilla_end_elytra:
+    name: "날개를 펼쳐"
+    description: "겉날개를 획득했습니다!"
+    type: VANILLA
+    tier: LEGENDARY
+    target: 0
+    bottcoin: 50
+    title: "title_sky_explorer"
+
+  # ============================================
+  # 바닐라 (VANILLA) 업적 - 추가 진행도 연동
+  # ============================================
+  
+  # --- Story (스토리) 추가 ---
+  vanilla_story_root:
+    name: "마인크래프트"
+    description: "게임의 핵심입니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 0
+    title: null
+    
+  vanilla_story_mine_stone:
+    name: "석기 시대"
+    description: "돌을 채굴했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_upgrade_tools:
+    name: "도구 업그레이드"
+    description: "더 좋은 곡괭이를 만들었습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_smelt_iron:
+    name: "철 제련"
+    description: "철 주괴를 제련했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_obtain_armor:
+    name: "갑옷 장착"
+    description: "갑옷을 착용했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_lava_bucket:
+    name: "뜨거운 것이 좋아"
+    description: "용암 양동이를 획득했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_iron_tools:
+    name: "철기 시대"
+    description: "철 도구를 만들었습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_deflect_arrow:
+    name: "못 들어온다"
+    description: "방패로 화살을 튕겨냈습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_form_obsidian:
+    name: "얼음아 꽁"
+    description: "흑요석을 만들었습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_story_shiny_gear:
+    name: "반짝반짝"
+    description: "다이아몬드 장비를 착용했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_story_enchant_item:
+    name: "인챈터"
+    description: "아이템에 마법을 부여했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 2
+    title: null
+    
+  vanilla_story_cure_zombie_villager:
+    name: "좀비 의사"
+    description: "좀비 주민을 치료했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_story_follow_ender_eye:
+    name: "눈을 따라"
+    description: "엔더 눈을 던져 요새를 찾았습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+
+  # --- Nether (네더) 추가 ---
+  vanilla_nether_root:
+    name: "네더"
+    description: "네더 진행도의 시작입니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 0
+    title: null
+    
+  vanilla_nether_return_to_sender:
+    name: "반송"
+    description: "가스트의 화염구를 반사했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_nether_find_fortress:
+    name: "무시무시한 요새"
+    description: "네더 요새를 발견했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_nether_obtain_blaze_rod:
+    name: "블레이즈 사냥꾼"
+    description: "블레이즈 막대를 획득했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_nether_brew_potion:
+    name: "포션 양조"
+    description: "포션을 양조했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 2
+    title: null
+    
+  vanilla_nether_distract_piglin:
+    name: "주의 분산"
+    description: "피글린에게 금을 던져 주의를 끌었습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_nether_find_bastion:
+    name: "보루 발견"
+    description: "피글린 보루 잔해를 발견했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_nether_loot_bastion:
+    name: "보루 약탈"
+    description: "피글린 보루에서 전리품을 획득했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_nether_explore_nether:
+    name: "네더 탐험"
+    description: "모든 네더 바이옴을 탐험했습니다!"
+    type: VANILLA
+    tier: EPIC
+    target: 0
+    bottcoin: 10
+    title: null
+    
+  vanilla_nether_obtain_ancient_debris:
+    name: "고대 잔해"
+    description: "고대 잔해를 획득했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_nether_obtain_crying_obsidian:
+    name: "울고 있는 흑요석"
+    description: "울고 있는 흑요석을 획득했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 2
+    title: null
+    
+  vanilla_nether_fast_travel:
+    name: "빠른 여행"
+    description: "네더를 이용해 오버월드에서 7km를 이동했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+
+  # --- End (엔드) 추가 ---
+  vanilla_end_root:
+    name: "디 엔드"
+    description: "엔드 진행도의 시작입니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 0
+    title: null
+    
+  vanilla_end_find_end_city:
+    name: "엔드 시티"
+    description: "엔드 시티를 발견했습니다!"
+    type: VANILLA
+    tier: EPIC
+    target: 0
+    bottcoin: 10
+    title: null
+    
+  vanilla_end_enter_end_gateway:
+    name: "엔드 관문"
+    description: "엔드 관문을 통과했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_end_dragon_breath:
+    name: "드래곤의 숨결"
+    description: "드래곤의 숨결을 수집했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+    
+  vanilla_end_dragon_egg:
+    name: "드래곤 알"
+    description: "드래곤 알을 획득했습니다!"
+    type: VANILLA
+    tier: LEGENDARY
+    target: 0
+    bottcoin: 25
+    title: null
+
+  # --- Adventure (모험) 추가 ---
+  vanilla_adventure_root:
+    name: "모험"
+    description: "모험 진행도의 시작입니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 0
+    title: null
+    
+  vanilla_adventure_kill_a_mob:
+    name: "몬스터 사냥꾼"
+    description: "적대적 몬스터를 처치했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_adventure_trade:
+    name: "상인과 거래"
+    description: "주민과 거래했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_adventure_sleep_in_bed:
+    name: "좋은 꿈"
+    description: "침대에서 잤습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_adventure_shoot_arrow:
+    name: "화살 발사"
+    description: "화살을 발사했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_adventure_voluntary_exile:
+    name: "자발적 유배"
+    description: "습격 대장을 처치했습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_adventure_avoid_vibration:
+    name: "떨림 회피"
+    description: "스컬크 센서 근처에서 웅크리기로 이동했습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 2
+    title: null
+    
+  vanilla_adventure_lightning_rod_with_villager_no_fire:
+    name: "피뢰침"
+    description: "피뢰침이 마을에서 낙뢰를 받았습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 5
+    title: null
+
+  # --- Husbandry (축산) 추가 ---
+  vanilla_husbandry_root:
+    name: "축산"
+    description: "축산 진행도의 시작입니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 0
+    title: null
+    
+  vanilla_husbandry_plant_seed:
+    name: "씨앗 심기"
+    description: "씨앗을 심었습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_husbandry_fishy_business:
+    name: "낚시의 세계"
+    description: "물고기를 잡았습니다!"
+    type: VANILLA
+    tier: NORMAL
+    target: 0
+    bottcoin: 1
+    title: null
+    
+  vanilla_husbandry_axolotl_in_a_bucket:
+    name: "아홀로틀 포획"
+    description: "아홀로틀을 양동이에 담았습니다!"
+    type: VANILLA
+    tier: RARE
+    target: 0
+    bottcoin: 3
+    title: null
+    
+  vanilla_husbandry_obtain_netherite_hoe:
+    name: "진정한 헌신"
+    description: "네더라이트 괭이를 만들었습니다!"
+    type: VANILLA
+    tier: LEGENDARY
+    target: 0
+    bottcoin: 25
+    title: null

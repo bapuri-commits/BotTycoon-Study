@@ -1,0 +1,36 @@
+/**
+ * BotTycoon 클라이언트 모드 - 루트 빌드 설정
+ * 
+ * 이 프로젝트는 두 개의 서브모듈로 구성됩니다:
+ * - tycoon-hud: HUD 렌더링 및 서버 통신
+ * - tycoon-ui: 통합 GUI 시스템
+ */
+
+// 모든 서브모듈의 JAR을 루트 build/libs로 복사하는 태스크
+tasks.register('collectJars', Copy) {
+    group = 'build'
+    description = '모든 모듈의 JAR 파일을 루트 build/libs로 복사합니다.'
+    
+    // 서브모듈 빌드 완료 후 실행
+    dependsOn ':tycoon-hud:build', ':tycoon-ui:build'
+    
+    // 복사할 JAR 파일들
+    from("tycoon-hud/build/libs") {
+        include "*.jar"
+        exclude "*-sources.jar"
+    }
+    from("tycoon-ui/build/libs") {
+        include "*.jar"
+        exclude "*-sources.jar"
+    }
+    
+    // 복사 대상
+    into "build/libs"
+}
+
+// build 태스크 실행 시 자동으로 collectJars 실행
+tasks.register('buildAll') {
+    group = 'build'
+    description = '모든 모듈을 빌드하고 JAR을 수집합니다.'
+    dependsOn 'collectJars'
+}
